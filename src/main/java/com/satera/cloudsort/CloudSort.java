@@ -1,4 +1,4 @@
-package com.statera.cloudsort;
+package com.satera.cloudsort;
 
 import java.util.Collection;
 
