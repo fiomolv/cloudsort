@@ -1,4 +1,4 @@
-package com.zabada.springrecipes.hibernatejpa.entity;
+package com.satera.cloudsort.entity;
 
 
 import java.util.ArrayList;
@@ -10,9 +10,12 @@ import junit.framework.TestCase;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import com.zabada.springrecipes.hibernatejpa.dao.MusicDAO;
+import com.satera.cloudsort.dao.MusicDAO;
+import com.satera.cloudsort.entity.Artist;
+import com.satera.cloudsort.entity.ImageFile;
+import com.satera.cloudsort.entity.Record;
+import com.satera.cloudsort.entity.Track;
 
-import com.zabada.springrecipes.hibernatejpa.entity.ImageFile;
 public class DAOTest extends TestCase
 {
   private MusicDAO musicDAO;
@@ -32,7 +35,7 @@ public class DAOTest extends TestCase
       
       
       String filename = "349587345834.jpg";
-      com.zabada.springrecipes.hibernatejpa.entity.ImageFile imageFile = new com.zabada.springrecipes.hibernatejpa.entity.ImageFile();
+      com.satera.cloudsort.entity.ImageFile imageFile = new com.satera.cloudsort.entity.ImageFile();
       imageFile.setFilename(filename);
       musicDAO.saveImageFile(imageFile);
       assertNotNull(imageFile.getId()); 
