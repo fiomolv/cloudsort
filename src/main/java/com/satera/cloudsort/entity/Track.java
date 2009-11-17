@@ -1,4 +1,4 @@
-package com.zabada.springrecipes.hibernatejpa.entity;
+package com.satera.cloudsort.entity;
 
 import java.io.Serializable;
 

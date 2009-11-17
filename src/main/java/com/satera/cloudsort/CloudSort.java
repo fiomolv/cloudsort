@@ -5,9 +5,9 @@ import java.util.Collection;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import com.zabada.springrecipes.hibernatejpa.dao.MusicDAO;
-import com.zabada.springrecipes.hibernatejpa.entity.Artist;
-import com.zabada.springrecipes.hibernatejpa.entity.ImageFile;
+import com.satera.cloudsort.dao.MusicDAO;
+import com.satera.cloudsort.entity.Artist;
+import com.satera.cloudsort.entity.ImageFile;
 
 public class CloudSort {
 

@@ -20,21 +20,21 @@
     </property>
     <property name="annotatedClasses">
       <list>
-        <value>com.zabada.springrecipes.hibernatejpa.entity.Track</value>
-        <value>com.zabada.springrecipes.hibernatejpa.entity.Record</value>
-        <value>com.zabada.springrecipes.hibernatejpa.entity.Artist</value>
-        <value>com.zabada.springrecipes.hibernatejpa.entity.ImageFile</value>
+        <value>com.satera.cloudsort.entity.Track</value>
+        <value>com.satera.cloudsort.entity.Record</value>
+        <value>com.satera.cloudsort.entity.Artist</value>
+        <value>com.satera.cloudsort.entity.ImageFile</value>
       </list>
     </property>
   </bean>
 
   <bean id="hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor" autowire="byName" /><!--sessionFactory will get autowired-->
 
-  <bean id="musicDaoTarget" class="com.zabada.springrecipes.hibernatejpa.dao.MusicDAOHibernateImpl" autowire="byName" /><!--sessionFactory will get autowired-->
+  <bean id="musicDaoTarget" class="com.satera.cloudsort.dao.MusicDAOHibernateImpl" autowire="byName" /><!--sessionFactory will get autowired-->
 
   <bean id="musicDAO" class="org.springframework.aop.framework.ProxyFactoryBean">
     <property name="proxyInterfaces">
-      <value>com.zabada.springrecipes.hibernatejpa.dao.MusicDAO</value>
+      <value>com.satera.cloudsort.dao.MusicDAO</value>
     </property>
     <property name="interceptorNames">
       <list>

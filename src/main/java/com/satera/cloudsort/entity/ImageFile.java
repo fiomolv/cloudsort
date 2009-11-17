@@ -1,4 +1,4 @@
-package com.zabada.springrecipes.hibernatejpa.entity;
+package com.satera.cloudsort.entity;
 
 import java.io.Serializable;
 
@@ -12,12 +12,11 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
-public class Artist implements Serializable
+public class ImageFile implements Serializable
 {
-  private static final long serialVersionUID = -6872825805935710407L;
+  private static final long serialVersionUID = 5736455873645418556L;
   private Integer id;
-  private String name;
-  private String genre;
+  private String filename;
 
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
@@ -31,27 +30,16 @@ public class Artist implements Serializable
     this.id = id;
   }
   
-  public String getGenre()
-  {
-    return genre;
-  }
-
-  public void setGenre(String genre)
-  {
-    this.genre = genre;
-  }
-
-  public String getName()
-  {
-    return name;
-  }
-
-  public void setName(String name)
-  {
-    this.name = name;
-  }
   
-  public boolean equals(Object obj)
+  public String getFilename() {
+    return filename;
+}
+
+public void setFilename(String filename) {
+    this.filename = filename;
+}
+
+public boolean equals(Object obj)
   {
     return EqualsBuilder.reflectionEquals(this, obj);
   }

@@ -1,14 +1,14 @@
-package com.zabada.springrecipes.hibernatejpa.dao;
+package com.satera.cloudsort.dao;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import com.zabada.springrecipes.hibernatejpa.entity.Artist;
-import com.zabada.springrecipes.hibernatejpa.entity.ImageFile;
-import com.zabada.springrecipes.hibernatejpa.entity.Record;
-import com.zabada.springrecipes.hibernatejpa.entity.Track;
+import com.satera.cloudsort.entity.Artist;
+import com.satera.cloudsort.entity.ImageFile;
+import com.satera.cloudsort.entity.Record;
+import com.satera.cloudsort.entity.Track;
 
 /**
  * Implementation of MusicDAO implemented by extending Spring's
