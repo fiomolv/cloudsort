@@ -12,8 +12,8 @@ import com.satera.cloudsort.entity.Record;
 import com.satera.cloudsort.entity.Track;
 
 
-public class MusicDAOHibernateImpl extends HibernateDaoSupport implements
-	MusicDAO {
+public class TurkDAOHibernateImpl extends HibernateDaoSupport implements
+	TurkDAO {
     public Collection<Artist> getArtists() {
 	return getHibernateTemplate().loadAll(Artist.class);
     }

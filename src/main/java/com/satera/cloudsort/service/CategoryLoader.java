@@ -8,16 +8,16 @@ import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.satera.cloudsort.dao.MusicDAO;
+import com.satera.cloudsort.dao.TurkDAO;
 import com.satera.cloudsort.entity.Category;
 
 public class CategoryLoader {
 
     
-    private MusicDAO dao = null;
+    private TurkDAO dao = null;
     
     @Autowired
-    public void setMusicDAO(MusicDAO musicDAO){
+    public void setMusicDAO(TurkDAO musicDAO){
 	this.dao = musicDAO;
     }
     

@@ -9,7 +9,7 @@ import com.satera.cloudsort.entity.ImageFile;
 import com.satera.cloudsort.entity.Record;
 import com.satera.cloudsort.entity.Track;
 
-public interface MusicDAO
+public interface TurkDAO
 {
   public Collection<Artist> getArtists();
 

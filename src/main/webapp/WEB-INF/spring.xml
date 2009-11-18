@@ -31,16 +31,16 @@
 
   <bean id="hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor" autowire="byName" /><!--sessionFactory will get autowired-->
 
-  <bean id="musicDaoTarget" class="com.satera.cloudsort.dao.MusicDAOHibernateImpl" autowire="byName" /><!--sessionFactory will get autowired-->
+  <bean id="turkDaoTarget" class="com.satera.cloudsort.dao.TurkDAOHibernateImpl" autowire="byName" /><!--sessionFactory will get autowired-->
 
-  <bean id="musicDAO" class="org.springframework.aop.framework.ProxyFactoryBean">
+  <bean id="turkDAO" class="org.springframework.aop.framework.ProxyFactoryBean">
     <property name="proxyInterfaces">
-      <value>com.satera.cloudsort.dao.MusicDAO</value>
+      <value>com.satera.cloudsort.dao.TurkDAO</value>
     </property>
     <property name="interceptorNames">
       <list>
         <value>hibernateInterceptor</value>
-        <value>musicDaoTarget</value>
+        <value>mturkDaoTarget</value>
       </list>
     </property>
   </bean>
