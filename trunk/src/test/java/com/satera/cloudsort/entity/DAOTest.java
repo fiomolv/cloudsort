@@ -10,7 +10,7 @@ import junit.framework.TestCase;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import com.satera.cloudsort.dao.MusicDAO;
+import com.satera.cloudsort.dao.TurkDAO;
 import com.satera.cloudsort.entity.Artist;
 import com.satera.cloudsort.entity.ImageFile;
 import com.satera.cloudsort.entity.Record;
@@ -19,13 +19,13 @@ import com.satera.cloudsort.service.CategoryLoader;
 
 public class DAOTest extends TestCase
 {
-  private MusicDAO musicDAO;
+  private TurkDAO turkDAO;
   
   public void setUp() throws Exception
   {
     super.setUp();
     ApplicationContext context = new FileSystemXmlApplicationContext("src/main/webapp/WEB-INF/spring.xml");
-    musicDAO = (MusicDAO)context.getBean("musicDAO");
+    turkDAO = (TurkDAO)context.getBean("turkDAO");
     
     
     CategoryLoader categoryLoader = (CategoryLoader)context.getBean("categoryLoader");
@@ -33,43 +33,38 @@ public class DAOTest extends TestCase
   }
 
   /**
-   * Simple tests excersing the various methods of MusicDAO
+   * Simple tests excersing the various methods of turkDAO
    */
   public void test()
   {
       
-      
       String filename = "349587345834.jpg";
       com.satera.cloudsort.entity.ImageFile imageFile = new com.satera.cloudsort.entity.ImageFile();
       imageFile.setFilename(filename);
-      musicDAO.saveImageFile(imageFile);
+      turkDAO.saveImageFile(imageFile);
       assertNotNull(imageFile.getId()); 
       
-      
-      
-      List<Category> topLevelCategories = musicDAO.getTopLevelCategories();
+    
+      List<Category> topLevelCategories = turkDAO.getTopLevelCategories();
       
       assertNotNull(topLevelCategories);
       assertEquals(18,topLevelCategories.size());
-      
-      
-      
-      
+    
     String artistName = "Tenacious D";
     Artist artist = new Artist();
     artist.setName(artistName);
     artist.setGenre("Comedy");
-    musicDAO.saveArtist(artist);
+    turkDAO.saveArtist(artist);
     assertNotNull(artist.getId());
     
     //Save an additional Artist
     Artist artist2 = new Artist();
     artist2.setName("Spinal Tap");
     artist2.setGenre("Mock Rock");
-    musicDAO.saveArtist(artist2);
+    turkDAO.saveArtist(artist2);
     
     //Test "loadAll"
-    Collection<Artist> loadedArtists = musicDAO.getArtists();
+    Collection<Artist> loadedArtists = turkDAO.getArtists();
     assertEquals(2, loadedArtists.size());
     for(Artist a:loadedArtists)
     {
@@ -86,12 +81,12 @@ public class DAOTest extends TestCase
     Record record2 = createRecord(artist, record2Title, record2Tracks); 
     
     //Load back artist1
-    Artist artistOne = musicDAO.getArtistById(artist.getId());
+    Artist artistOne = turkDAO.getArtistById(artist.getId());
     assertEquals("Tenacious D", artistOne.getName());
     assertEquals("Comedy", artistOne.getGenre());
     
     //Load back record 1
-    Record recordOne = musicDAO.getRecordById(record1.getId());
+    Record recordOne = turkDAO.getRecordById(record1.getId());
     assertEquals(record1Title, recordOne.getTitle());
     assertEquals(artistName, recordOne.getArtist().getName());
 
@@ -99,7 +94,7 @@ public class DAOTest extends TestCase
     assertEquals(record1Tracks[1], recordOne.getTracks().get(1).getTitle());
 
     //Load back record 2
-    Record recordTwo = musicDAO.getRecordById(record2.getId());
+    Record recordTwo = turkDAO.getRecordById(record2.getId());
     assertEquals(record2Title, recordTwo.getTitle());
     assertEquals(artistName, recordTwo.getArtist().getName());
 
@@ -107,24 +102,21 @@ public class DAOTest extends TestCase
     assertEquals(record2Tracks[1], recordTwo.getTracks().get(1).getTitle());  
 
     //Test Loading a Track By Id and Make sure that all associations exist
-    Track loadedTrack = musicDAO.getTrackById(recordTwo.getTracks().get(1).getId());
+    Track loadedTrack = turkDAO.getTrackById(recordTwo.getTracks().get(1).getId());
     assertEquals("Wonderboy", loadedTrack.getTitle());
     assertEquals("Tenacious D", loadedTrack.getRecord().getTitle());
     assertEquals("Tenacious D", loadedTrack.getRecord().getArtist().getName());
     assertEquals("Dio", loadedTrack.getRecord().getTracks().get(2).getTitle());
   
     //Test "searchRecordsByTitle"
-    List<Record> recordsSearch1 = musicDAO.searchRecordsByTitle("Destiny");
+    List<Record> recordsSearch1 = turkDAO.searchRecordsByTitle("Destiny");
     assertEquals(1, recordsSearch1.size());
     
-    List<Record> recordsSearch2 = musicDAO.searchRecordsByTitle("e");
+    List<Record> recordsSearch2 = turkDAO.searchRecordsByTitle("e");
     System.out.println("Searched records: " + recordsSearch2);
     assertEquals(2, recordsSearch2.size());    
     
-    
-    
-    
-    
+
     
     
   }
@@ -144,7 +136,7 @@ public class DAOTest extends TestCase
       tracks1.add(track);
     }
     record.setTracks(tracks1);
-    musicDAO.saveRecord(record);
+    turkDAO.saveRecord(record);
     assertNotNull(record.getId());
     return record;
   }
