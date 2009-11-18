@@ -17,8 +17,8 @@ public class CategoryLoader {
     private TurkDAO dao = null;
     
     @Autowired
-    public void setMusicDAO(TurkDAO musicDAO){
-	this.dao = musicDAO;
+    public void setTurkDAO(TurkDAO turkDAO){
+	this.dao = turkDAO;
     }
     
     
