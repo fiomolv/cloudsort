@@ -15,6 +15,7 @@ import com.satera.cloudsort.entity.Artist;
 import com.satera.cloudsort.entity.ImageFile;
 import com.satera.cloudsort.entity.Record;
 import com.satera.cloudsort.entity.Track;
+import com.satera.cloudsort.service.CategoryLoader;
 
 public class DAOTest extends TestCase
 {
@@ -25,6 +26,10 @@ public class DAOTest extends TestCase
     super.setUp();
     ApplicationContext context = new FileSystemXmlApplicationContext("src/main/webapp/WEB-INF/spring.xml");
     musicDAO = (MusicDAO)context.getBean("musicDAO");
+    
+    
+    CategoryLoader categoryLoader = (CategoryLoader)context.getBean("categoryLoader");
+    categoryLoader.load();
   }
 
   /**
@@ -39,6 +44,14 @@ public class DAOTest extends TestCase
       imageFile.setFilename(filename);
       musicDAO.saveImageFile(imageFile);
       assertNotNull(imageFile.getId()); 
+      
+      
+      
+      List<Category> topLevelCategories = musicDAO.getTopLevelCategories();
+      
+      assertNotNull(topLevelCategories);
+      assertEquals(18,topLevelCategories.size());
+      
       
       
       

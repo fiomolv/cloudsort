@@ -6,16 +6,12 @@ import java.util.List;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.satera.cloudsort.entity.Artist;
+import com.satera.cloudsort.entity.Category;
 import com.satera.cloudsort.entity.ImageFile;
 import com.satera.cloudsort.entity.Record;
 import com.satera.cloudsort.entity.Track;
 
-/**
- * Implementation of MusicDAO implemented by extending Spring's
- * HibernateDaoSupport
- * 
- * @author roblambert
- */
+
 public class MusicDAOHibernateImpl extends HibernateDaoSupport implements
 	MusicDAO {
     public Collection<Artist> getArtists() {
@@ -59,4 +55,45 @@ public class MusicDAOHibernateImpl extends HibernateDaoSupport implements
 	getHibernateTemplate().saveOrUpdate(imageFile);
 	return imageFile;
     }
+
+    public Category saveCategory(Category category) {
+	getHibernateTemplate().saveOrUpdate(category);
+	return category;
+    }
+    
+    
+    public Category getCategoryById(Integer id) {
+	Category category = (Category) getHibernateTemplate().load(Category.class, id);
+	System.out.println("Got category: " + category);
+	return category;
+    }   
+    
+    public Category getCategoryByName(String name) {
+	Category category = null;
+	List<Category> list = getHibernateTemplate().find("from Category where name=?", name);  
+	if(list!=null&&list.size()>0){
+	    category = list.get(0);
+	}
+	
+	return category;
+    } 
+    
+    
+    
+    public Category getCategoryByCategoryCode (String categoryCode) {
+	Category category = null;
+	List<Category> list = getHibernateTemplate().find("from Category where categoryCode=?", categoryCode);  
+	if(list!=null&&list.size()>0){
+	    category = list.get(0);
+	}
+	return category;
+    }
+
+    
+    public List<Category> getTopLevelCategories() {
+	List<Category> list = getHibernateTemplate().find("from Category where parentID is null");  
+	return list;
+    }     
+    
+    
 }

@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.satera.cloudsort.entity.Artist;
+import com.satera.cloudsort.entity.Category;
 import com.satera.cloudsort.entity.ImageFile;
 import com.satera.cloudsort.entity.Record;
 import com.satera.cloudsort.entity.Track;
@@ -56,6 +57,35 @@ public interface MusicDAO
   public ImageFile saveImageFile(ImageFile imageFile);
 
   
+  /**
+   * Save a Aategory Object
+   */
+  public Category saveCategory(Category category);
   
+  /**
+   * Get a Category given the id
+   * @param id
+   */
+  public Category getCategoryById(Integer id);
+
+  
+  
+  /**
+   * Get a Category given the categoryCode
+   * @param id
+   */
+  public Category getCategoryByCategoryCode(String categoryCode);
+  
+  /**
+   * Get a Category given the categoryCode
+   * @param id
+   */
+  public Category getCategoryByName(String name);
+
+  /**
+   * Get a top level categories
+   */
+  public List<Category> getTopLevelCategories();
+ 
   
 }
