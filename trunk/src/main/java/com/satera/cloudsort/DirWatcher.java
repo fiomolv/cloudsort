@@ -2,20 +2,55 @@ package com.satera.cloudsort;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DirWatcher implements Runnable {
+import com.satera.cloudsort.service.HITManager;
 
-    private static final String inputDir = "/opt/cloudsort/in";
+public class DirWatcher extends Thread {
+
+    private String inDir;
+    private String processedDir;
+       
+    public DirWatcher(String inDir,String processedDir){
+	this.inDir = inDir;
+	this.processedDir = processedDir;
+    }
+    
     public void run() {
 	
 	while(true){
-	    System.out.println("looking for new images");
+
+	    List<String> files = getNewFiles();
+	    
+	    for(String f:files){
+
+		System.out.println("moving file "+ f);
+		File src = new File(inDir+"/" +f); 
+
+		boolean success = src.renameTo(new File(processedDir, f));
+
+		System.out.println("success = "+ success);
+		
+		
+	        HITManager app = new HITManager();
+
+	        if (app.hasEnoughFund()) {
+	          app.createSiteCategoryHITs();
+	        }		
+		
+		
+		
+
+	    }
 	    
 	    
-	    getNewFiles();
 	    try {
 		
 		Thread.currentThread().sleep(5000L);
@@ -35,36 +70,26 @@ public class DirWatcher implements Runnable {
     
     List getNewFiles(){
 	
-	List newFiles = new ArrayList();
+	List<String> newFiles = new ArrayList();
 	
-	  File dir = new File(inputDir);
+	  File dir = new File(inDir);
 	    
 	    FileFilter fileFilter = new FileFilter() {
 	        public boolean accept(File file) {
 	            String lower = file.getName().toLowerCase();
-	            System.out.println("Considering "+ lower);
 	            boolean isImage = lower.endsWith(".jpg")||lower.endsWith(".gif")||lower.endsWith(".png");
 	            boolean isDir = file.isDirectory();
-	            long age = System.currentTimeMillis() - file.lastModified();   
-	            
-	            
-
-	            
-	            
+	            long age = System.currentTimeMillis() - file.lastModified();   	                       	            
 	            return !isDir&&isImage&&age > 2000L;
 	        }
 	    };
 	   File[] files = dir.listFiles(fileFilter);
-	   // File[] files = dir.listFiles();
-	    
-	    System.out.println("file count "+files.length );
-	    	    
+    
 	    for(int i=0;i<10&&i<files.length;i++){
 		System.out.println("file "+files[i].getAbsolutePath());
-		newFiles.add(files[i].getAbsolutePath());
+		newFiles.add(files[i].getName());
 	    }
-
 	    return newFiles;	
     }
-    
+  
 }

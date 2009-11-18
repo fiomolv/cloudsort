@@ -1,13 +1,10 @@
 package com.satera.cloudsort;
 
-import java.util.Collection;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.satera.cloudsort.dao.TurkDAO;
-import com.satera.cloudsort.entity.Artist;
-import com.satera.cloudsort.entity.ImageFile;
+import com.satera.cloudsort.service.CategoryLoader;
 
 public class CloudSort {
 
@@ -17,14 +14,18 @@ public class CloudSort {
 
 	ApplicationContext context = new FileSystemXmlApplicationContext(
 		"src/main/webapp/WEB-INF/spring.xml");
-
+	
+	CategoryLoader categoryLoader = (CategoryLoader) context.getBean("categoryLoader");
+	categoryLoader.load();
+	
 	TurkDAO dao = (TurkDAO) context.getBean("turkDAO");
 	
-	dao = (TurkDAO) context.getBean("turkDAO");
-	ImageFile imageFile = new ImageFile();
-	imageFile.setFilename("DUDER.gif");
-	dao.saveImageFile(imageFile);
-	DirWatcher dirWatcher = new DirWatcher();
-	dirWatcher.run();
+	Ingestor ingester = (Ingestor)context.getBean("ingestor");
+	ingester.init();
+	
+	//dao = (TurkDAO) context.getBean("turkDAO");
+	//ImageFile imageFile = new ImageFile();
+	//imageFile.setFilename("DUDER.gif");
+	//dao.saveImageFile(imageFile);
     }
 }
