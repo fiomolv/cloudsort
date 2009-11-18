@@ -24,6 +24,7 @@
         <value>com.satera.cloudsort.entity.Record</value>
         <value>com.satera.cloudsort.entity.Artist</value>
         <value>com.satera.cloudsort.entity.ImageFile</value>
+        <value>com.satera.cloudsort.entity.Category</value>
       </list>
     </property>
   </bean>
@@ -43,5 +44,7 @@
       </list>
     </property>
   </bean>
+  
+  <bean id="categoryLoader" class="com.satera.cloudsort.service.CategoryLoader" autowire="byName" />
 
 </beans>
