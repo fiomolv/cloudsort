@@ -49,6 +49,7 @@
   <classpathentry kind="var" path="M2_REPO/org/apache/ws/jaxme/jaxmejs/0.5.2/jaxmejs-0.5.2.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/ws/jaxme/jaxmepm/0.5.2/jaxmepm-0.5.2.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/ws/jaxme/jaxmexs/0.5.2/jaxmexs-0.5.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/json/json/20090211/json-20090211.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/transaction/jta/1.0.1B/jta-1.0.1B.jar"/>
   <classpathentry kind="var" path="M2_REPO/junit/junit/3.8.1/junit-3.8.1.jar" sourcepath="M2_REPO/junit/junit/3.8.1/junit-3.8.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/log4j/log4j/1.2.12/log4j-1.2.12.jar"/>
@@ -58,6 +59,7 @@
   <classpathentry kind="var" path="M2_REPO/javax/persistence/persistence-api/1.0/persistence-api-1.0.jar" sourcepath="M2_REPO/javax/persistence/persistence-api/1.0/persistence-api-1.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/apache-xerces/resolver/2.9.1/resolver-2.9.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/xalan/serializer/2.7.1/serializer-2.7.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring/2.5.6/spring-2.5.6.jar" sourcepath="M2_REPO/org/springframework/spring/2.5.6/spring-2.5.6-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/velocity/velocity/1.5/velocity-1.5.jar"/>
   <classpathentry kind="var" path="M2_REPO/velocity-tools/velocity-tools/1.4/velocity-tools-1.4.jar"/>

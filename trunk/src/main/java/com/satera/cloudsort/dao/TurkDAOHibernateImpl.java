@@ -74,12 +74,9 @@ public class TurkDAOHibernateImpl extends HibernateDaoSupport implements
 	if(list!=null&&list.size()>0){
 	    category = list.get(0);
 	}
-	
 	return category;
     } 
-    
-    
-    
+        
     public Category getCategoryByCategoryCode (String categoryCode) {
 	Category category = null;
 	List<Category> list = getHibernateTemplate().find("from Category where categoryCode=?", categoryCode);  
@@ -92,6 +89,13 @@ public class TurkDAOHibernateImpl extends HibernateDaoSupport implements
     
     public List<Category> getTopLevelCategories() {
 	List<Category> list = getHibernateTemplate().find("from Category where parentID is null");  
+	return list;
+    }
+
+
+
+    public List<Category> getCategories(String topLevelCategoryName) {
+	List<Category> list = getHibernateTemplate().find("from Category where parentID in (select id from Category where name=?) order by name",topLevelCategoryName);  
 	return list;
     }     
     

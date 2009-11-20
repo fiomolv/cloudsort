@@ -88,4 +88,12 @@ public interface TurkDAO
   public List<Category> getTopLevelCategories();
  
   
+
+  /**
+   * Get categories
+   */
+  public List<Category> getCategories(String topLevelCategoryName);
+ 
+      
+  
 }
