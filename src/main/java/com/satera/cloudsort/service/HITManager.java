@@ -9,22 +9,31 @@ import com.amazonaws.mturk.addon.HITDataInput;
 import com.amazonaws.mturk.addon.HITDataOutput;
 import com.amazonaws.mturk.addon.HITProperties;
 import com.amazonaws.mturk.addon.HITQuestion;
+import com.amazonaws.mturk.requester.Assignment;
+import com.amazonaws.mturk.requester.EventType;
 import com.amazonaws.mturk.requester.HIT;
+import com.amazonaws.mturk.requester.NotificationSpecification;
+import com.amazonaws.mturk.requester.NotificationTransport;
 import com.amazonaws.mturk.service.axis.RequesterService;
+import com.amazonaws.mturk.service.axis.RequesterServiceRaw;
 import com.amazonaws.mturk.util.PropertiesClientConfig;
 
 public class HITManager {
   
       // Defining the locations of the input files
-      private RequesterService service;
+    private RequesterService service;
+   // private RequesterServiceRaw serviceRaw;
+    
+    private static String host="24.17.221.139";
       private String rootDir = "src/main/resources/mturk";
       private String inputFile = rootDir + "/site_category.input";
       private String propertiesFile = rootDir + "/site_category.properties";
       private String questionFile = rootDir + "/site_category.question";
 
       public HITManager() {
-        service = new RequesterService(new PropertiesClientConfig(rootDir + "/mturk.properties"));
-      }
+	       service = new RequesterService(new PropertiesClientConfig(rootDir + "/mturk.properties"));
+	      // serviceRaw = new RequesterServiceRaw(new PropertiesClientConfig(rootDir + "/mturk.properties"));
+	            }
 
       /**
        * Check to see if there are sufficient funds.
@@ -80,11 +89,13 @@ public class HITManager {
           //The .success file can be used in subsequent operations to retrieve the results that workers submitted.
           HITDataOutput success = new HITDataCSVWriter(inputFile + ".success");
           HITDataOutput failure = new HITDataCSVWriter(inputFile + ".failure");
+                           
+          props.setMaxAssignments("2");
           hits = service.createHITs(input, props, question, success, failure);
 
-          
+      
           System.out.println("QUESTION IS : " + question.getQuestion());
-          /*
+          
           
           System.out.println("--[End Loading HITs]----------");
           Date endTime = new Date();
@@ -97,13 +108,40 @@ public class HITManager {
             throw new Exception("Could not create HITs");
           }
           
+          NotificationSpecification notification = new NotificationSpecification();
+          notification.setDestination("http://"+host+"/cloudsort/hitresult");
+          notification.setEventType(new EventType[]{EventType.AssignmentSubmitted,EventType.AssignmentAccepted,EventType.AssignmentReturned,EventType.AssignmentAbandoned});
+          notification.setTransport(NotificationTransport.REST);
+         notification.setVersion("2006-05-05");
           
-          */
+         
+          service.setHITTypeNotification(hits[0].getHITTypeId(), notification, true);
 
         } catch (Exception e) {
           System.err.println(e.getLocalizedMessage());
         }
       }
+      
+      
+      public void getHITResult(String hitId){
+	  
+	  
+	
+	  Assignment[] assignments = service.getAllSubmittedAssignmentsForHIT(hitId);
+	  
+	 
+	  
+	  
+	  for(Assignment assignment:assignments){
+	      
+	      System.out.println("THE ANSWER IS" + assignment.getAnswer());
+	      System.out.println("WORKER is" + assignment.getWorkerId());	      
+	  }
+	  
+	  
+	  
+      }
+      
 
     	/**
        * @param args
