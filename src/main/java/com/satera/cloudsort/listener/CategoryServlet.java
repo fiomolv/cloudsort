@@ -20,10 +20,7 @@ import com.satera.cloudsort.entity.Category;
 public class CategoryServlet extends HttpServlet {
 
     static Logger log = Logger.getLogger("CategoryServlet");
-    
-  
-
-    
+   
     public void doGet(HttpServletRequest request, HttpServletResponse response)
 	    throws IOException {
 
