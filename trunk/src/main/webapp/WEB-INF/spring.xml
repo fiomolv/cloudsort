@@ -20,10 +20,9 @@
     </property>
     <property name="annotatedClasses">
       <list>
-        <value>com.satera.cloudsort.entity.Track</value>
-        <value>com.satera.cloudsort.entity.Record</value>
-        <value>com.satera.cloudsort.entity.Artist</value>
-        <value>com.satera.cloudsort.entity.ImageFile</value>
+        <value>com.satera.cloudsort.entity.Response</value>
+        <value>com.satera.cloudsort.entity.Request</value>
+        <value>com.satera.cloudsort.entity.Product</value>
         <value>com.satera.cloudsort.entity.Category</value>
       </list>
     </property>
@@ -32,7 +31,8 @@
   <bean id="hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor" autowire="byName" /><!--sessionFactory will get autowired-->
 
   <bean id="turkDaoTarget" class="com.satera.cloudsort.dao.TurkDAOHibernateImpl" autowire="byName" /><!--sessionFactory will get autowired-->
-
+  <bean id="HITManager" class="com.satera.cloudsort.service.HITManager" autowire="byName" />
+  
   <bean id="turkDAO" class="org.springframework.aop.framework.ProxyFactoryBean">
     <property name="proxyInterfaces">
       <value>com.satera.cloudsort.dao.TurkDAO</value>

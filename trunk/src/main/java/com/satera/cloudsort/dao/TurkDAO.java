@@ -3,97 +3,101 @@ package com.satera.cloudsort.dao;
 import java.util.Collection;
 import java.util.List;
 
-import com.satera.cloudsort.entity.Artist;
+import com.amazonaws.mturk.requester.Assignment;
+import com.satera.cloudsort.entity.Response;
 import com.satera.cloudsort.entity.Category;
-import com.satera.cloudsort.entity.ImageFile;
-import com.satera.cloudsort.entity.Record;
-import com.satera.cloudsort.entity.Track;
+import com.satera.cloudsort.entity.Request;
+import com.satera.cloudsort.entity.Product;
 
-public interface TurkDAO
-{
-  public Collection<Artist> getArtists();
+public interface TurkDAO {
 
-  /**
-   * Get a Artist Object given the id
-   * @param id
-   */
-  public Artist getArtistById(Integer id);
+    /**
+     * Get a Product given the id
+     * 
+     * @param id
+     */
+    public Product getProductById(Integer id);
 
-  /**
-   * Save an Artist Object
-   */
-  public Artist saveArtist(Artist artist);
+    /**
+     * Save a record
+     * 
+     * @param record
+     */
+    public Product saveProduct(Product product);
 
-  /**
-   * Get a Record given the id
-   * @param id
-   */
-  public Record getRecordById(Integer id);
+    /**
+     * Save a request
+     * 
+     * @param request
+     */
+    public Request saveRequest(Request request);
 
-  /**
-   * Save a record
-   * @param record
-   */
-  public Record saveRecord(Record record);
+    /**
+     * Save a response
+     * 
+     * @param response
+     */
+    public Response saveResponse(Response response);
 
-  /**
-   * Get a Track given the id
-   * @param id
-   * @return
-   */
-  public Track getTrackById(Integer id);
+    /**
+     * Get a Hit given the id
+     * 
+     * @param id
+     * @return
+     */
+    public Request getRequestById(Integer id);
 
-  /**
-   * Search records given the title of the record
-   * @param title
-   */
-  public List<Record> searchRecordsByTitle(String title);
-  
-  
-  
-  /**
-   * Save an ImageFile Object
-   */
-  public ImageFile saveImageFile(ImageFile imageFile);
+    /**
+     * Get a Hit given the id
+     * 
+     * @param id
+     * @return
+     */
+    public Request getRequestByHitId(String hitId);
 
-  
-  /**
-   * Save a Aategory Object
-   */
-  public Category saveCategory(Category category);
-  
-  /**
-   * Get a Category given the id
-   * @param id
-   */
-  public Category getCategoryById(Integer id);
+    /**
+     * Save a Aategory Object
+     */
+    public Category saveCategory(Category category);
 
-  
-  
-  /**
-   * Get a Category given the categoryCode
-   * @param id
-   */
-  public Category getCategoryByCategoryCode(String categoryCode);
-  
-  /**
-   * Get a Category given the categoryCode
-   * @param id
-   */
-  public Category getCategoryByName(String name);
+    /**
+     * Get a Category given the id
+     * 
+     * @param id
+     */
+    public Category getCategoryById(Integer id);
 
-  /**
-   * Get a top level categories
-   */
-  public List<Category> getTopLevelCategories();
- 
-  
+    /**
+     * Get a Category given the categoryCode
+     * 
+     * @param id
+     */
+    public Category getCategoryByCategoryCode(String categoryCode);
 
-  /**
-   * Get categories
-   */
-  public List<Category> getCategories(String topLevelCategoryName);
- 
-      
-  
+    /**
+     * Get a Category given the categoryCode
+     * 
+     * @param id
+     */
+    public Category getCategoryByName(String name);
+
+    /**
+     * Get a top level categories
+     */
+    public List<Category> getTopLevelCategories();
+
+    /**
+     * Get categories
+     */
+    public List<Category> getCategories(String topLevelCategoryName);
+
+    public Response getResponseByAssignmentId(String assignmentId);
+
+    public List<Response> getTierOneResponsesForTierTwoResponseId(Integer id);
+
+    public Request getRequestByProductIdAndTier(int productId, int i);
+
+    public List<Response> getResponsesByRequestId(
+	    Integer id);
+
 }
