@@ -3,6 +3,7 @@ package com.statera.cloudsort.service;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -14,7 +15,7 @@ import com.amazonaws.mturk.requester.NotificationSpecification;
 import com.amazonaws.mturk.requester.NotificationTransport;
 import com.amazonaws.mturk.requester.QualificationRequirement;
 import com.amazonaws.mturk.service.axis.RequesterService;
-import com.amazonaws.mturk.util.PropertiesClientConfig;
+import com.amazonaws.mturk.util.ClientConfig;
 import com.statera.cloudsort.dao.TurkDAO;
 import com.statera.cloudsort.entity.Product;
 import com.statera.cloudsort.entity.Request;
@@ -25,7 +26,6 @@ public class HITManager {
     private RequesterService service;
 
     private static String host = "ec2-67-202-32-214.compute-1.amazonaws.com";
-    private String rootDir = "/opt/cloudsort/mturk";
     static Logger log = Logger.getLogger("HitManager");
 
     private TurkDAO turkDAO;
@@ -35,8 +35,21 @@ public class HITManager {
     }
 
     public HITManager() {
-	service = new RequesterService(new PropertiesClientConfig(rootDir
-		+ "/mturk.properties"));
+	
+	ClientConfig clientConfig = new ClientConfig();
+	clientConfig.setAccessKeyId("AKIAIBIVBL3ZY2LNYHSQ");
+	clientConfig.setSecretAccessKey("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");
+	clientConfig.setServiceURL(ClientConfig.SANDBOX_SERVICE_URL);
+	clientConfig.setRetryAttempts(10);
+	clientConfig.setRetryDelayMillis(1000);
+	HashSet<String> retriableErrors = new HashSet<String>();
+	retriableErrors.add("Server.ServiceUnavailable");
+	
+	clientConfig.setRetriableErrors(retriableErrors);
+		
+	service = new RequesterService(clientConfig);
+	
+	
     }
 
     /**
