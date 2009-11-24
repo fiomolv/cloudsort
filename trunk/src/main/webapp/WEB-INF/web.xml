@@ -37,19 +37,19 @@
 
   <servlet>
     <servlet-name>hitresult</servlet-name>
-    <servlet-class>com.satera.cloudsort.listener.HITResultServlet</servlet-class>
+    <servlet-class>com.statera.cloudsort.listener.HITResultServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>  
 
   <servlet>
     <servlet-name>category</servlet-name>
-    <servlet-class>com.satera.cloudsort.listener.CategoryServlet</servlet-class>
+    <servlet-class>com.statera.cloudsort.listener.CategoryServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>  
     
   <servlet>
     <servlet-name>init</servlet-name>
-    <servlet-class>com.satera.cloudsort.listener.InitServlet</servlet-class>
+    <servlet-class>com.statera.cloudsort.listener.InitServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>  
         

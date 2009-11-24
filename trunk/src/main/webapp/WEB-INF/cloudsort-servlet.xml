@@ -13,7 +13,7 @@
   <!--
     - The controllers are autodetected POJOs labeled with the @Controller annotation.
   -->
-  <context:component-scan base-package="com.satera.cloudsort.web" />
+  <context:component-scan base-package="com.statera.cloudsort.web" />
 
   <!--
     - The form-based controllers within this application provide
@@ -33,7 +33,7 @@
   <!-- bean
     class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
     <property name="webBindingInitializer">
-      <bean class="com.satera.cloudsort.web.VirtutelBindingInitializer" />
+      <bean class="com.statera.cloudsort.web.VirtutelBindingInitializer" />
     </property>
   </bean-->
 
@@ -72,11 +72,6 @@
     class="org.springframework.context.support.ResourceBundleMessageSource"
     p:basename="messages" />
 
-
-  <!-- jaxws:endpoint id="enterprise"
-    implementor="com.satera.cloudsort.ws.EnterpriseImpl" address="/Enterprise/Usage" />
-  <jaxws:endpoint id="usage" implementor="com.satera.cloudsort.ws.UsageImpl"
-    address="/ENTERPRISE" /-->
 
 
 
