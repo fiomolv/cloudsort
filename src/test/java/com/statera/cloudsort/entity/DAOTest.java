@@ -1,4 +1,4 @@
-package com.satera.cloudsort.entity;
+package com.statera.cloudsort.entity;
 
 
 import java.util.List;
@@ -8,8 +8,8 @@ import junit.framework.TestCase;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import com.satera.cloudsort.dao.TurkDAO;
-import com.satera.cloudsort.service.CategoryLoader;
+import com.statera.cloudsort.dao.TurkDAO;
+import com.statera.cloudsort.service.CategoryLoader;
 
 public class DAOTest extends TestCase
 {
@@ -33,7 +33,7 @@ public class DAOTest extends TestCase
   {
       
       String filename = "349587345834.jpg";
-      Product product = new com.satera.cloudsort.entity.Product();
+      Product product = new com.statera.cloudsort.entity.Product();
      
       
       product.setCategoryCode("10531");

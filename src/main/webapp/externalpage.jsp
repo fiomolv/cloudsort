@@ -47,7 +47,7 @@ function decode(strToDecode)
 <h2>Select a category for the product shown below.</h2>
 <p>
 
-  <div id="categoryStore" dojoType="dojo.data.ItemFileReadStore" jsId="categoryStore" url="/cloudsort/category?type=Appliances">
+  <div id="categoryStore" dojoType="dojo.data.ItemFileReadStore" jsId="categoryStore" url="/cloudsort/category?type=<%=request.getParameter("type")%>">
         </div>
         <input dojoType="dijit.form.FilteringSelect" value="" store="categoryStore"
         searchAttr="name" name="category" id="category">
@@ -56,21 +56,15 @@ function decode(strToDecode)
 <p>
 </td></tr>
 <tr><td height="100%">
-<img id="pageFrame" src=""/>
+
+<img id="pageFrame" src="<%=request.getParameter("type")%>"/>
+
 </td></tr>
 </table>
 </form>
 <script language="Javascript">
     document.getElementById('pageFrame').src = decode(gup('url'));
     document.getElementById('assignmentId').value = gup('assignmentId');
-
-
-alert('8888 type = ' + gup('type'));
-    document.getElementById('categoryStore').url = "/cloudsort/category?type="+gup('type');
-
-
-alert('url = ' +document.getElementById('categoryStore').url);
-
 
     //
     // Check if the worker is PREVIEWING the HIT or if they've ACCEPTED the HIT
