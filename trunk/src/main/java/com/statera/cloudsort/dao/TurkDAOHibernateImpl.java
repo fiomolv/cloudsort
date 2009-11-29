@@ -2,6 +2,7 @@ package com.statera.cloudsort.dao;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.statera.cloudsort.entity.Category;
@@ -10,8 +11,10 @@ import com.statera.cloudsort.entity.Request;
 import com.statera.cloudsort.entity.Response;
 
 
-public class TurkDAOHibernateImpl extends HibernateDaoSupport implements TurkDAO{
 
+public class TurkDAOHibernateImpl extends HibernateDaoSupport implements TurkDAO{
+    
+    static Logger log = Logger.getLogger("TurkDAOHibernateImpl");
     public Product saveProduct(Product product) {
 	getHibernateTemplate().saveOrUpdate(product);
 	return product;
@@ -24,7 +27,6 @@ public class TurkDAOHibernateImpl extends HibernateDaoSupport implements TurkDAO
        
     public Category getCategoryById(Integer id) {
 	Category category = (Category) getHibernateTemplate().load(Category.class, id);
-	System.out.println("Got category: " + category);
 	return category;
     }   
     
@@ -51,6 +53,12 @@ public class TurkDAOHibernateImpl extends HibernateDaoSupport implements TurkDAO
 	return list;
     }
 
+    public List<Category> getDetailedCategories() {
+	List<Category> list = getHibernateTemplate().find("from Category where parentID is not null");  
+	return list;
+    }
+    
+    
     public List<Category> getCategories(Integer parentId) {
 	List<Category> list = getHibernateTemplate().find("from Category where parentID =?",parentId);  
 	return list;
@@ -88,6 +96,7 @@ public class TurkDAOHibernateImpl extends HibernateDaoSupport implements TurkDAO
     }
 
     public Product getProductById(Integer id) {
+	log.info("loading product for id " + id);
 	Product product = (Product) getHibernateTemplate().load(Product.class, id);
 	return product;
     }
@@ -115,5 +124,7 @@ public class TurkDAOHibernateImpl extends HibernateDaoSupport implements TurkDAO
 	List<Response> list = getHibernateTemplate().find("from Response where requestId=?",requestId);  
 	return list;
     }
+
+
 
 }

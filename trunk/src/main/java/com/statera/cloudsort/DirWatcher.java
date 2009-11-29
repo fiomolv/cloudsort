@@ -3,6 +3,7 @@ package com.statera.cloudsort;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,8 +11,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import au.com.bytecode.opencsv.CSVReader;
+
+import com.Ostermiller.util.CSVParser;
 import com.statera.cloudsort.dao.TurkDAO;
 import com.statera.cloudsort.entity.Product;
+import com.statera.cloudsort.entity.Suggestion;
 import com.statera.cloudsort.service.HITManager;
 
 public class DirWatcher extends Thread {
@@ -43,7 +48,7 @@ public class DirWatcher extends Thread {
 		File src = new File(inDir+"/" +f); 
 
 		
-		load(parentCategoryId,src);
+		load(parentCategoryId,src,true);
 		
 		boolean success = src.renameTo(new File(processedDir, f));
 
@@ -95,31 +100,62 @@ public class DirWatcher extends Thread {
     
     
     
-    public void load(int parentCategoryId,File file){
+    public void load(int parentCategoryId,File file,boolean createHITs){
 	 
 	try {
-	    BufferedReader reader = new BufferedReader(new FileReader(file));
-	    String line = reader.readLine();
-	    		    
-	    while ((line = reader.readLine()) != null) {
+	    CSVParser csvParser = new CSVParser(new FileInputStream(file));
 
-		StringTokenizer st = new StringTokenizer(line,",");
+	   
 
-		String oid = st.nextToken();
-		String title = st.nextToken();
-		String imageUrl = st.nextToken();
 
+	    String[] nextLine = csvParser.getLine(); //skip first line
+	    while ((nextLine = csvParser.getLine()) != null) {
+	        // nextLine[] is an array of values from the line
+	
+		String oid = nextLine[0];
+		String title = nextLine[1];
+		String imageUrl = nextLine[2];
+		String productUrl = nextLine[3];
+
+
+		if(title.length()>255)title=title.substring(0,255);
+		if(imageUrl.length()>255)imageUrl=imageUrl.substring(0,255);
+		if(productUrl.length()>255)productUrl=productUrl.substring(0,255);
+		
 		
 		Product product = new Product();
 		
 		product.setOid(oid);
 		product.setParentCategoryId(parentCategoryId);
+		product.setTitle(title);
 		product.setCreatedDate(new Date());
-		product.setUrl(imageUrl);
+		product.setImageUrl(imageUrl);
+		product.setProductUrl(productUrl);
+				
+		for(int i=0;i<6;i++){
+		    
+		    
+		    
+		    String categoryCode = nextLine[4+2*i];
+		    
+		    
+		    if(categoryCode.length()>255)categoryCode=categoryCode.substring(0,255);
+		    
+		    String categoryName = nextLine[5+2*i];
+		    
+		    if(categoryName.length()>255)categoryName=categoryName.substring(0,255);
+		    
+		    
+		    
+		    product.addSuggestion(categoryCode,categoryName);
+		}
 		
 		dao.saveProduct(product);
-					
-		hitManager.createHIT(product, 1);
+				
+		
+		
+		if(createHITs)
+		  hitManager.createHIT(product, 1);
 		
 		
 	    }

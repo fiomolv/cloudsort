@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.statera.cloudsort.dao.TurkDAO;
@@ -15,7 +16,10 @@ public class CategoryLoader {
 
     
     private TurkDAO dao = null;
-    
+
+    static Logger log = Logger.getLogger("CategoryLoader");
+       
+ 
     @Autowired
     public void setTurkDAO(TurkDAO turkDAO){
 	this.dao = turkDAO;
@@ -23,6 +27,8 @@ public class CategoryLoader {
     
     
     public void load(){
+	
+	int categoriesLoaded = 0;
 	 
 		try {
 		    BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/categories.csv"));
@@ -50,22 +56,25 @@ public class CategoryLoader {
 			
 			category.setParentID(parent.getId());
 			
+		
+			try{
 			
-			
-	
-			System.out.println("category: "+name);
 			dao.saveCategory(category);
+			categoriesLoaded++;
+			
+			}catch(Exception e){
+			    log.info("failed to load category " +  name+ ", " + e.getMessage());
+			}
 			
 		    }
 		} catch (IOException e) {
 		    // TODO Auto-generated catch block
 		    e.printStackTrace();
 		}
-
+		
+		log.info(categoriesLoaded + " categories loaded");
 		
 	    }
-
-
     }
     
     

@@ -1,12 +1,16 @@
 package com.statera.cloudsort.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -23,6 +27,8 @@ public class Request implements Serializable
   private int parentCategoryId;
   private Date createdDate;
   private int productId;
+  
+ 
   public int getProductId() {
     return productId;
 }

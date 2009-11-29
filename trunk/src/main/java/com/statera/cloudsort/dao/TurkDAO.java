@@ -7,6 +7,7 @@ import com.statera.cloudsort.entity.Product;
 import com.statera.cloudsort.entity.Request;
 import com.statera.cloudsort.entity.Response;
 
+
 public interface TurkDAO {
 
     /**
@@ -85,6 +86,12 @@ public interface TurkDAO {
     public List<Category> getTopLevelCategories();
 
     /**
+     * Get detailed categories
+     */
+    public List<Category> getDetailedCategories();
+    
+    
+    /**
      * Get categories
      */
     public List<Category> getCategories(Integer parentId);
@@ -97,5 +104,7 @@ public interface TurkDAO {
 
     public List<Response> getResponsesByRequestId(
 	    Integer id);
+
+    public Properties getConfig();
 
 }
