@@ -1,6 +1,7 @@
 package com.statera.cloudsort.entity;
 
 
+import java.io.File;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -8,8 +9,10 @@ import junit.framework.TestCase;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import com.statera.cloudsort.DirWatcher;
 import com.statera.cloudsort.dao.TurkDAO;
 import com.statera.cloudsort.service.CategoryLoader;
+import com.statera.cloudsort.service.HITManager;
 
 public class DAOTest extends TestCase
 {
@@ -32,25 +35,20 @@ public class DAOTest extends TestCase
   public void test()
   {
       
-      String filename = "349587345834.jpg";
-      Product product = new com.statera.cloudsort.entity.Product();
+      String filename = "src/test/data/test.csv";
+      //String filename = "src/test/data/appliances-11-18-09.csv";
+      
+      Category category = turkDAO.getCategoryByName("Appliances");
+      
+      DirWatcher dirWatcher = new DirWatcher("/tmp","/tmp/out",category.getId(),turkDAO,new HITManager());
+
+      
+	
+      dirWatcher.load(category.getId(), new File(filename),false);
+	  
+	  
+      //Product product = new com.statera.cloudsort.entity.Product();
      
-      
-      product.setCategoryCode("10531");
-      product.setParentCategoryId(1);
-      
-      
-      turkDAO.saveProduct(product);
-      assertNotNull(product.getId()); 
-      
-      assertEquals("10531",product.getCategoryCode());
-      
-      
-      
-      Product product2 = turkDAO.getProductById(product.getId());
-      assertEquals("10531",product2.getCategoryCode());
-      
-      
     
       List<Category> topLevelCategories = turkDAO.getTopLevelCategories();
       

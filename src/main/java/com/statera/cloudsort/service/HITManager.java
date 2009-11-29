@@ -81,7 +81,7 @@ public class HITManager {
 	String encodedUrl = "";
 
 	try {
-	    encodedUrl = URLEncoder.encode(product.getUrl(), "UTF-8");
+	    encodedUrl = URLEncoder.encode(product.getImageUrl(), "UTF-8");
 	} catch (UnsupportedEncodingException e) {
 	    e.printStackTrace();
 	}
@@ -95,8 +95,7 @@ public class HITManager {
 
 	String question = "<?xml version=\"1.0\"?>"
 		+ "<ExternalQuestion xmlns=\"http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2006-07-14/ExternalQuestion.xsd\">"
-		+ "	<ExternalURL>http://24.17.221.139/cloudsort/externalpage.jsp?url="
-		+ encodedUrl + "&amp;type=" + product.getParentCategoryId()
+		+ "	<ExternalURL>http://24.17.221.139/cloudsort//hit.do?id=" + product.getId()
 		+ "</ExternalURL>" + "	<FrameHeight>400</FrameHeight>"
 		+ "</ExternalQuestion>";
 

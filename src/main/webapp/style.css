@@ -1,0 +1,267 @@
+/* main elements */
+
+body,div,td {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: black;
+}
+
+body {
+	background-color: white;
+	#background-image: url(../images/banner-graphic.png);
+	background-position: top center;
+	background-repeat: no-repeat;
+	min-width: 600px;
+	margin-top: 0px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* tweaking this is a bad idea since the dojo stuff depends on it */
+div {
+}
+
+/* header and footer elements */
+
+#main {
+  	margin:0 auto;
+  	position:relative;
+  	top: 35px;
+  	left:0px;
+  	width:560px;
+  	text-align:left;
+}
+
+#wrap {
+    margin:0 auto;
+    width:100%;
+    }
+
+#header {
+	margin: 5px 25px 5px 25px;
+	text-align: left;
+	padding:10px;
+    margin-top:10px;
+    min-width:680px;
+	background-image: url(images/metal_small.gif);
+	}
+	
+#footer {
+		margin: 5px 25px 5px 25px;
+		text-align: left;
+        padding:10px;
+        clear:both;
+		background-image: url(images/metal_small.gif);
+        min-width:680px;
+	}
+
+#leftcolumn {
+        float:left;
+		text-align: left;
+        padding:10px;
+        width:205px;	
+        margin-top:5px;
+        margin-right:0px;
+        margin-left:30px;
+        margin-bottom:10px;
+        background-color:#F6F6F6;
+        border:1px solid;
+        border-color:#DDDCDC;
+        borderColor:#DDDCDC;
+        }
+	
+#maincontent {
+        position:relative;
+		margin: 5px 5px 5px 5px;
+		text-align: left;
+        top:5px;
+        margin-left:270px;
+        margin-bottom:10px;
+        margin-right:25px;
+        right:2px;
+        padding:20px;
+        min-width:415px;
+        background-color:#f6f6f6;
+        border:1px solid;
+        border-color:#DDDCDC;
+        borderColor:#DDDCDC;
+	}
+#fullwidthcontent {
+		position:relative;
+        margin: 5px 25px 5px 25px;
+		text-align: left;
+        padding:20px;
+        min-width:680px;
+        background-color:#f6f6f6;
+        border:1px solid #dddcdc;
+	}
+	
+/* text styles */
+
+h1,h2,h3 {
+	font-family: Helvetica, sans-serif;
+	color: #4f4f4f;
+}
+
+h1 {
+	font-size: 20px;
+	line-height: 26px;
+}
+
+h2 {
+	font-size: 18px;
+	line-height: 24px;
+	margin-top: 0px;
+}
+
+h3 {
+	font-size: 15px;
+	line-height: 21px;
+	color:#555;
+}
+
+h4 {
+	font-size: 14px;
+	line-height: 20px;
+}
+
+.errors {
+	color: red;
+	font-weight: bold;
+}
+
+a {
+	text-decoration: underline;
+	font-size: 13px;
+}
+
+a:link {
+	color:#4f4f4f;
+}
+
+a:hover {
+	color:black;
+}
+
+a:active {
+	color:black;
+}
+
+a:visited { 
+	color:#4f4f4f;
+}
+
+
+li {
+	padding-top: 5px;
+	text-align: left;
+}
+
+li ul {
+	list-style: square url(images/sub-bullet.gif);
+}
+
+li ul li ul {
+	list-style: circle none;
+}
+
+/* table elements */
+
+table {
+	width: 100%;
+}
+
+table table {
+	width: 100%;
+	padding: 5px;
+	spacing: 0px;
+}
+
+table td,table th {
+	text-align: left;
+}
+
+thead{
+		background-color:lightgrey;
+}
+caption {
+	caption-side: top;
+	width: auto;
+	text-align: left;
+	font-size: 12px;
+	color: #848f73;
+	padding-bottom: 4px;
+}
+
+fieldset {
+	background: #e0e7d3;
+	padding: 8px;
+	padding-bottom: 22px;
+	border: none;
+	width: 560px;
+}
+
+fieldset label {
+	width: 70px;
+	float: left;
+	margin-top: 1.7em;
+	margin-left: 20px;
+}
+
+fieldset textfield {
+	margin: 3px;
+	height: 20px;
+	background: #e0e7d3;
+}
+
+fieldset textarea {
+	margin: 3px;
+	height: 165px;
+	background: #e0e7d3;
+}
+
+fieldset input {
+	margin: 3px;
+	height: 20px;
+	background: #e0e7d3;
+}
+
+fieldset table {
+	width: 100%;
+}
+
+fieldset th {
+	padding-left: 25px;
+}
+
+.table-buttons {
+	background-color:#f6f6f6;
+	border:none;
+}
+
+.table-buttons td {
+	border:none;
+}
+
+.submit input {
+	background:url(../images/submit-bg.png) repeat-x;
+    border: 2px outset #d7b9c9;
+	color:#383838;
+	padding:2px 10px;
+	font-size:11px;
+	text-transform:uppercase;
+	font-weight:bold;
+}
+
+.updated {
+	background:#ecf1e5;
+	font-size:11px;
+	margin-left:2px;
+	border:4px solid #ecf1e5;
+}
+
+.updated td {
+	padding:2px 8px;
+	font-size:11px;
+	color:#888888;
+}

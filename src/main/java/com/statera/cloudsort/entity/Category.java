@@ -2,6 +2,7 @@ package com.statera.cloudsort.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +20,9 @@ public class Category implements Serializable
   private String name;
   private Integer parentID;
   private String categoryCode;
+  
+  
+  
 
   public  Integer getParentID() {
     return parentID;
@@ -28,6 +32,7 @@ public void setParentID(Integer parentID) {
     this.parentID = parentID;
 }
 
+@Column(unique=true)
 public String getCategoryCode() {
     return categoryCode;
 }
