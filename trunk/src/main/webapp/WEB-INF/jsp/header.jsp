@@ -4,8 +4,8 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
- 
-  <title>CrowdSort</title>	
+   <link rel="stylesheet" href="/cloudsort/style.css" type="text/css"/>
+  <title>CloudSort</title>	
 </head>
 <body>
   <div id="main">

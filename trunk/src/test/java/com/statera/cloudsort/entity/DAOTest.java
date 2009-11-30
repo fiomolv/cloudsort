@@ -1,6 +1,5 @@
 package com.statera.cloudsort.entity;
 
-
 import java.io.File;
 import java.util.List;
 
@@ -23,8 +22,7 @@ public class DAOTest extends TestCase
     super.setUp();
     ApplicationContext context = new FileSystemXmlApplicationContext("src/main/webapp/WEB-INF/spring.xml");
     turkDAO = (TurkDAO)context.getBean("turkDAO");
-    
-    
+      
     CategoryLoader categoryLoader = (CategoryLoader)context.getBean("categoryLoader");
     categoryLoader.load();
   }
@@ -54,8 +52,42 @@ public class DAOTest extends TestCase
       
       assertNotNull(topLevelCategories);
       assertEquals(18,topLevelCategories.size());
-    
-    
+      
+      
+      Qualification qualification = new Qualification();
+      
+      Integer categoryId = 10023;
+      qualification.setCategoryId(categoryId);
+      qualification.setQualTypeIdGeneral("788357836");
+      qualification.setQualTypeIdTrusted("387366379");
+      
+      qualification.setQualTypeScoreGeneral(50);
+      qualification.setQualTypeScoreTrusted(75);
+      
+      turkDAO.saveQualification(qualification);
+      
+      Qualification qualification2 = turkDAO.getQualificationForCategoryId(categoryId);
+      
+      assertNotNull(qualification2);
+      assertEquals(new Integer(75),qualification2.getQualTypeScoreTrusted());
+   
+      
+      Config config = new Config();
+      config.setName("host");
+      config.setValue("localhost");
+      
+      turkDAO.saveConfig(config);
+      
+      String lookupValue = turkDAO.getConfigValue("host");
+      
+      assertNotNull(lookupValue);
+      assertEquals(config.getValue(),lookupValue);
+      
+      
+      
+      
+      
+      
   }
   
 }

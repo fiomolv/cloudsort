@@ -28,32 +28,39 @@ import org.hibernate.annotations.Proxy;
 
 
 @Entity
-public class Config implements Serializable {
+public class User implements Serializable {
     
-    
-    public static final String HOST="host";
-    public static final String ACCESS_KEY_ID = "accessKeyId";
-    public static final String SECRET_ACCESS_KEY = "secretAccessKey";
-    public static final String TURK_ENVIRONMENT = "turkEnvironment";
-        
-    public static final String TIER_1_REWARD = "tier1Reward";
-    public static final String TIER_2_REWARD = "tier2Reward";
-        
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)    
     private Integer id;
-    private String name;
-    private String value;
+    private String username;
+    private String password;
+    private boolean enabled;
 
-    public Config(){
-	
+
+    public String getUsername() {
+        return username;
     }
-    
-    public Config(String name,String value){
-	this.name = name;
-	this.value = value;
+
+    public void setUsername(String username) {
+        this.username = username;
     }
-    
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
     public Integer getId() {
 	return id;
@@ -64,7 +71,6 @@ public class Config implements Serializable {
     }
 
   
-
     public boolean equals(Object obj) {
 	return EqualsBuilder.reflectionEquals(this, obj);
     }
@@ -77,22 +83,6 @@ public class Config implements Serializable {
 	return ToStringBuilder.reflectionToString(this);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-    
     
 
 }

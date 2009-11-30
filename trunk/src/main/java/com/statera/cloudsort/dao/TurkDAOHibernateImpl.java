@@ -9,6 +9,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import com.statera.cloudsort.entity.Category;
 import com.statera.cloudsort.entity.Config;
 import com.statera.cloudsort.entity.Product;
+import com.statera.cloudsort.entity.Qualification;
 import com.statera.cloudsort.entity.Request;
 import com.statera.cloudsort.entity.Response;
 
@@ -137,6 +138,64 @@ public class TurkDAOHibernateImpl extends HibernateDaoSupport implements TurkDAO
 	return props;
     }
 
+    public Qualification getQualificationForCategoryId(Integer parentId) {
+	Qualification qualification = null;
+	List<Qualification> list = getHibernateTemplate().find("from Qualification where categoryId=?",new Object[]{parentId});  
+	if(list!=null&&list.size()>0){
+	    qualification = list.get(0);
+	}
+	return qualification;
 
+    }
+
+    public Qualification saveQualification(Qualification qualification) {
+	getHibernateTemplate().saveOrUpdate(qualification);
+	return qualification;
+    }
+
+    public String getConfigValue(String name) {
+	String value = null;
+	List<Config> list = getHibernateTemplate().find("from Config where name=?",new Object[]{name});  
+	if(list!=null&&list.size()>0){
+	    Config config = list.get(0);
+	    value = config.getValue();
+	}
+	return value;
+
+    }
+
+    public Config saveConfig(Config config) {
+	getHibernateTemplate().saveOrUpdate(config);
+	return config;
+    }
+
+    public List<Qualification> getQualifications() {
+	List<Qualification> list = getHibernateTemplate().find("from Qualification order by name");  
+	return list;
+    }
+
+    public Config getConfigByName(String name) {
+	Config config = null;
+	List<Config> list = getHibernateTemplate().find("from Config where name=?",new Object[]{name});  
+	if(list!=null&&list.size()>0){
+	    config = list.get(0);	    
+	}
+	return config;
+    }
+
+    public Config getConfig(Integer id) {
+	Config config = (Config) getHibernateTemplate().load(Config.class, id);
+	return config;
+    }
+
+    public List<Config> getConfigList() {
+	List<Config> list = getHibernateTemplate().find("from Config"); 
+	return list;
+    }
+
+    public List<Product> getNewProducts() {
+	List<Product> list = getHibernateTemplate().find("from Product order by id desc limit 20");  
+	return list;
+    }
 
 }

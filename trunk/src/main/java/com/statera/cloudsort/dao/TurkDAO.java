@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.statera.cloudsort.entity.Category;
+import com.statera.cloudsort.entity.Config;
 import com.statera.cloudsort.entity.Product;
 import com.statera.cloudsort.entity.Qualification;
 import com.statera.cloudsort.entity.Request;
@@ -91,8 +92,7 @@ public interface TurkDAO {
      * Get detailed categories
      */
     public List<Category> getDetailedCategories();
-    
-    
+        
     /**
      * Get categories
      */
@@ -109,6 +109,23 @@ public interface TurkDAO {
 
     public Properties getConfig();
     
+    public Config getConfigByName(String name);
+    public Config getConfig(Integer id);
+    
+    public Config saveConfig(Config config);
+    
+    public String getConfigValue(String name);
+   
+           
+    public Qualification saveQualification(Qualification qualification);
+    
     public Qualification getQualificationForCategoryId(Integer parentId);
+    public List<Qualification> getQualifications();
+
+    public List<Config> getConfigList();
+    
+    
+    public List<Product> getNewProducts();
+    
 
 }
