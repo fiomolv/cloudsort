@@ -1,7 +1,8 @@
 package com.statera.cloudsort.web;
 
+
+
 import org.apache.log4j.Logger;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -51,6 +52,14 @@ public class CloudsortController {
     }
 
 
+    
+	@RequestMapping("/login")
+	    public void login(Model model) {
+	   
+	}   
+    
+    
+    
     
      @RequestMapping("/hit.do") public String
      hit(@RequestParam("id") String id, Model model) {

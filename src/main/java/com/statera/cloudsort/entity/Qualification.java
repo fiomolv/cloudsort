@@ -18,14 +18,23 @@ public class Qualification implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)    
     private Integer id;
 
+    private String name;
 
     
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     private Integer categoryId;
     private String qualTypeIdGeneral;
-    private Double qualTypeScoreGeneral;
+    private Integer qualTypeScoreGeneral;
     
     private String qualTypeIdTrusted;
-    private Double qualTypeScoreTrusted;
+    private Integer qualTypeScoreTrusted;
 
  
     
@@ -46,11 +55,11 @@ public class Qualification implements Serializable {
         this.qualTypeIdGeneral = qualTypeIdGeneral;
     }
 
-    public Double getQualTypeScoreGeneral() {
+    public Integer getQualTypeScoreGeneral() {
         return qualTypeScoreGeneral;
     }
 
-    public void setQualTypeScoreGeneral(Double qualTypeScoreGeneral) {
+    public void setQualTypeScoreGeneral(Integer qualTypeScoreGeneral) {
         this.qualTypeScoreGeneral = qualTypeScoreGeneral;
     }
 
@@ -65,11 +74,11 @@ public class Qualification implements Serializable {
 
 
 
-    public Double getQualTypeScoreTrusted() {
+    public Integer getQualTypeScoreTrusted() {
         return qualTypeScoreTrusted;
     }
 
-    public void setQualTypeScoreTrusted(Double qualTypeScoreTrusted) {
+    public void setQualTypeScoreTrusted(Integer qualTypeScoreTrusted) {
         this.qualTypeScoreTrusted = qualTypeScoreTrusted;
     }
 

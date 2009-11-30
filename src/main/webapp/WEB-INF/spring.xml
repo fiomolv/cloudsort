@@ -4,9 +4,15 @@
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost/mturk" />
+        <!--property name="url" value="jdbc:mysql://localhost/mturk" />
         <property name="username" value="root" />
+        <property name="password" value="m7urk" /-->
+        
+        <property name="url" value="jdbc:mysql://cloudsort.cxtckzcqtplc.us-east-1.rds.amazonaws.com:3306/cloudsort" />
+        <property name="username" value="cloudsort" />
         <property name="password" value="m7urk" />
+       
+        
         <property name="initialSize" value="5" />
         <property name="maxActive" value="20" />
         <property name="maxIdle" value="5" />
@@ -40,6 +46,8 @@
         <value>com.statera.cloudsort.entity.Suggestion</value>
         <value>com.statera.cloudsort.entity.Config</value>
         <value>com.statera.cloudsort.entity.Qualification</value>
+        <value>com.statera.cloudsort.entity.User</value>
+        <value>com.statera.cloudsort.entity.Error</value>
       </list>
     </property>
   </bean>
@@ -53,8 +61,9 @@
   <bean id="ingestor" class="com.statera.cloudsort.Ingestor" autowire="byName" />
   <bean id="setup" class="com.statera.cloudsort.service.Setup" autowire="byName" />
   <bean id="answerParser" class="com.statera.cloudsort.service.AnswerParser" autowire="byName" />
-  
-  
+  <bean id="qualificationManager" class="com.statera.cloudsort.service.QualificationManager" autowire="byName" />
+  <bean id="statusManager" class="com.statera.cloudsort.service.StatusManager" autowire="byName" />
+  <bean id="configManager" class="com.statera.cloudsort.service.ConfigManager" autowire="byName" />
   
   <bean id="turkDAO" class="org.springframework.aop.framework.ProxyFactoryBean">
     <property name="proxyInterfaces">

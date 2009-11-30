@@ -40,8 +40,6 @@ function selectChanged(){
    document.getElementById('radio3').checked=false;
    document.getElementById('radio4').checked=false;
    document.getElementById('radio5').checked=false;
-
-   
 }
 
 
@@ -89,14 +87,25 @@ Product: <a href="${product.productUrl} target="_new">${product.title}</a>
 If you see the correct category among these six suggestions, select it.<p/>
 </p>
 
+<p>
+
+  <% int i=0;%>
+  <c:forEach var="suggestion" items="${product.suggestions}">
+    <input id="radio<%=i%>" type="radio" name="category" value="${suggestion.categoryCode}"
+    onClick="radioClicked()"/>${suggestion.categoryName}<br/>
+    <% i++; %>
+  </c:forEach>
+</p>
+
 
 Otherwise, select from the comprehensive list below.
 <p/>
 <p>
         
         <select dojoType="dijit.form.FilteringSelect"
-          name="category" id="category"
+          name="category2" id="category"
           autocomplete="true"
+          onChange="selectChanged()"          
           value="0">
           <option value="0"></option>
      

@@ -28,32 +28,40 @@ import org.hibernate.annotations.Proxy;
 
 
 @Entity
-public class Config implements Serializable {
+public class Error implements Serializable {
     
-    
-    public static final String HOST="host";
-    public static final String ACCESS_KEY_ID = "accessKeyId";
-    public static final String SECRET_ACCESS_KEY = "secretAccessKey";
-    public static final String TURK_ENVIRONMENT = "turkEnvironment";
-        
-    public static final String TIER_1_REWARD = "tier1Reward";
-    public static final String TIER_2_REWARD = "tier2Reward";
-        
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)    
     private Integer id;
-    private String name;
-    private String value;
+    private Date createdDate;
+    private String description;
+    private String message;
 
-    public Config(){
-	
+
+
+    public Date getCreatedDate() {
+        return createdDate;
     }
-    
-    public Config(String name,String value){
-	this.name = name;
-	this.value = value;
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
-    
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public Integer getId() {
 	return id;
@@ -77,22 +85,6 @@ public class Config implements Serializable {
 	return ToStringBuilder.reflectionToString(this);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-    
     
 
 }
