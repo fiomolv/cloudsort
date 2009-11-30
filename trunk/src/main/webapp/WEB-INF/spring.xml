@@ -24,7 +24,7 @@
     <property name="dataSource" ref="dataSource" />
     <property name="hibernateProperties">
       <props>
-        <prop key="hibernate.hbm2ddl.auto">verify</prop>
+        <prop key="hibernate.hbm2ddl.auto">create</prop>
         <prop key="hibernate.show_sql">false</prop>
         <prop key="hibernate.connection.autocommit">true</prop>
         <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
@@ -48,7 +48,13 @@
 
   <bean id="turkDaoTarget" class="com.statera.cloudsort.dao.TurkDAOHibernateImpl" autowire="byName" /><!--sessionFactory will get autowired-->
   <bean id="HITManager" class="com.statera.cloudsort.service.HITManager" autowire="byName" />
-   <bean id="productManager" class="com.statera.cloudsort.service.ProductManager" autowire="byName" />
+  <bean id="productManager" class="com.statera.cloudsort.service.ProductManager" autowire="byName" />
+  <bean id="categoryLoader" class="com.statera.cloudsort.service.CategoryLoader" autowire="byName" />
+  <bean id="ingestor" class="com.statera.cloudsort.Ingestor" autowire="byName" />
+  <bean id="setup" class="com.statera.cloudsort.service.Setup" autowire="byName" />
+  <bean id="answerParser" class="com.statera.cloudsort.service.AnswerParser" autowire="byName" />
+  
+  
   
   <bean id="turkDAO" class="org.springframework.aop.framework.ProxyFactoryBean">
     <property name="proxyInterfaces">
@@ -62,8 +68,5 @@
     </property>
   </bean>
   
-  <bean id="categoryLoader" class="com.statera.cloudsort.service.CategoryLoader" autowire="byName" />
-  <bean id="ingestor" class="com.statera.cloudsort.Ingestor" autowire="byName" />
-  <bean id="setup" class="com.statera.cloudsort.service.Setup" autowire="byName" />
 
 </beans>

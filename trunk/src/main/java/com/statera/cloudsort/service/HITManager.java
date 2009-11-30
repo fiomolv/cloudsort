@@ -25,13 +25,19 @@ public class HITManager {
 
     private RequesterService service;
 
-    private static String host = "ec2-67-202-32-214.compute-1.amazonaws.com";
+    //private static String host = "ec2-67-202-32-214.compute-1.amazonaws.com";
+    private static String host = "24.17.221.139";
     static Logger log = Logger.getLogger("HitManager");
 
     private TurkDAO turkDAO;
 
     public void setTurkDAO(TurkDAO turkDAO) {
 	this.turkDAO = turkDAO;
+    }
+    private AnswerParser answerParser;
+
+    public void setAnswerParser(AnswerParser answerParser) {
+	this.answerParser = answerParser;
     }
 
     public HITManager() {
@@ -141,8 +147,7 @@ public class HITManager {
 	NotificationSpecification notification = new NotificationSpecification();
 	notification.setDestination("http://" + host + "/cloudsort/hitresult");
 	notification.setEventType(new EventType[] {
-		EventType.AssignmentSubmitted
-		//, EventType.AssignmentAccepted,EventType.AssignmentReturned, EventType.AssignmentAbandoned
+		EventType.AssignmentSubmitted, EventType.AssignmentAccepted,EventType.AssignmentReturned, EventType.AssignmentAbandoned
 		});
 	notification.setTransport(NotificationTransport.REST);
 	notification.setVersion("2006-05-05");
@@ -172,10 +177,9 @@ public class HITManager {
 
 	    log.info("got assignmentID " + assignment.getAssignmentId() +" from worker " + assignment.getWorkerId());
 	    
-	    String categoryIdAnswer = this.getCategoryIdAnswer(assignment
-		    .getAnswer());
-
-	    log.info("answer is " + categoryIdAnswer);
+	    log.info("answer XML: " + assignment.getAnswer());
+	    String categoryIdAnswer =  answerParser.getAnswer(assignment .getAnswer());
+	    log.info("answer is: " + categoryIdAnswer);
 	    
 	    Response response = turkDAO.getResponseByAssignmentId(assignment
 		    .getAssignmentId());
@@ -301,9 +305,10 @@ public class HITManager {
     }
 
     private String getCategoryIdAnswer(String xmlAnswer) {
-	int i = xmlAnswer.lastIndexOf("<FreeText>") + 10;
-	int j = xmlAnswer.lastIndexOf("</FreeText>");
-	String categoryId = xmlAnswer.substring(i, j);
+	
+	String categoryId = answerParser.getAnswer(xmlAnswer);
+
+	
 	return categoryId;
     }
 

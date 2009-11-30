@@ -27,6 +27,8 @@ public class HITResultServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws IOException {
 
+	
+	
 	HITManager hitManager;
 
 	ApplicationContext ctx = WebApplicationContextUtils
@@ -36,7 +38,7 @@ public class HITResultServlet extends HttpServlet {
 	hitManager = (HITManager) ctx.getBean("HITManager");
 
 	log.info(" HIT RESULT servlet called with payload: "
-		+ request.getQueryString());
+		+ request.getQueryString()+ ", method = "+request.getMethod());
 
 	Enumeration names = request.getParameterNames();
 	while (names.hasMoreElements()) {

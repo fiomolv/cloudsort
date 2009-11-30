@@ -1,9 +1,11 @@
 package com.statera.cloudsort.dao;
 
 import java.util.List;
+import java.util.Properties;
 
 import com.statera.cloudsort.entity.Category;
 import com.statera.cloudsort.entity.Product;
+import com.statera.cloudsort.entity.Qualification;
 import com.statera.cloudsort.entity.Request;
 import com.statera.cloudsort.entity.Response;
 
@@ -106,5 +108,7 @@ public interface TurkDAO {
 	    Integer id);
 
     public Properties getConfig();
+    
+    public Qualification getQualificationForCategoryId(Integer parentId);
 
 }

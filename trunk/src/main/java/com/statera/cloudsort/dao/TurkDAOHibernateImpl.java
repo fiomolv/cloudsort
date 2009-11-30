@@ -1,11 +1,13 @@
 package com.statera.cloudsort.dao;
 
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.statera.cloudsort.entity.Category;
+import com.statera.cloudsort.entity.Config;
 import com.statera.cloudsort.entity.Product;
 import com.statera.cloudsort.entity.Request;
 import com.statera.cloudsort.entity.Response;
@@ -123,6 +125,16 @@ public class TurkDAOHibernateImpl extends HibernateDaoSupport implements TurkDAO
     public List<Response> getResponsesByRequestId(Integer requestId) {
 	List<Response> list = getHibernateTemplate().find("from Response where requestId=?",requestId);  
 	return list;
+    }
+
+    public Properties getConfig() {
+	List<Config> list = getHibernateTemplate().find("from Config"); 
+	
+	Properties props = new Properties();
+	for(Config config:list){
+	    props.setProperty(config.getName(), config.getName());
+	}
+	return props;
     }
 
 
