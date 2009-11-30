@@ -12,19 +12,22 @@ import com.statera.cloudsort.DirWatcher;
 import com.statera.cloudsort.dao.TurkDAO;
 import com.statera.cloudsort.service.CategoryLoader;
 import com.statera.cloudsort.service.HITManager;
+import com.statera.cloudsort.service.Setup;
 
 public class DAOTest extends TestCase
 {
-  private TurkDAO turkDAO;
+    private TurkDAO turkDAO;
+    private Setup setup;
   
   public void setUp() throws Exception
   {
     super.setUp();
     ApplicationContext context = new FileSystemXmlApplicationContext("src/main/webapp/WEB-INF/spring.xml");
     turkDAO = (TurkDAO)context.getBean("turkDAO");
+    setup = (Setup)context.getBean("setup");
+    setup.execute();
       
-    CategoryLoader categoryLoader = (CategoryLoader)context.getBean("categoryLoader");
-    categoryLoader.load();
+
   }
 
   /**
