@@ -1,31 +1,15 @@
 package com.statera.cloudsort.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-
-
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.hibernate.annotations.Proxy;
-
 
 @Entity
 public class Qualification implements Serializable {
@@ -39,6 +23,13 @@ public class Qualification implements Serializable {
     private Integer categoryId;
     private String qualTypeIdGeneral;
     private Double qualTypeScoreGeneral;
+    
+    private String qualTypeIdTrusted;
+    private Double qualTypeScoreTrusted;
+
+ 
+    
+    
     public Integer getCategoryId() {
         return categoryId;
     }
@@ -71,18 +62,16 @@ public class Qualification implements Serializable {
         this.qualTypeIdTrusted = qualTypeIdTrusted;
     }
 
-    public Double getQualTypeScoreTruste() {
-        return qualTypeScoreTruste;
+
+
+
+    public Double getQualTypeScoreTrusted() {
+        return qualTypeScoreTrusted;
     }
 
-    public void setQualTypeScoreTruste(Double qualTypeScoreTruste) {
-        this.qualTypeScoreTruste = qualTypeScoreTruste;
+    public void setQualTypeScoreTrusted(Double qualTypeScoreTrusted) {
+        this.qualTypeScoreTrusted = qualTypeScoreTrusted;
     }
-
-    private String qualTypeIdTrusted;
-    private Double qualTypeScoreTruste;
-
- 
 
     public Integer getId() {
 	return id;
