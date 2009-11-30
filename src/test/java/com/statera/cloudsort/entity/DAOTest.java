@@ -71,7 +71,7 @@ public class DAOTest extends TestCase
       assertNotNull(qualification2);
       assertEquals(new Integer(75),qualification2.getQualTypeScoreTrusted());
    
-      
+      /*
       Config config = new Config();
       config.setName("host");
       config.setValue("localhost");
@@ -83,7 +83,7 @@ public class DAOTest extends TestCase
       assertNotNull(lookupValue);
       assertEquals(config.getValue(),lookupValue);
       
-      
+      */
       
       
       
