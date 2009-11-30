@@ -31,7 +31,7 @@ public class CategoryLoader {
 	int categoriesLoaded = 0;
 	 
 		try {
-		    BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/categories.csv"));
+		    BufferedReader reader = new BufferedReader(new FileReader("/opt/cloudsort/categories.csv"));
 		    String line = null;
 		    while ((line = reader.readLine()) != null) {
 
