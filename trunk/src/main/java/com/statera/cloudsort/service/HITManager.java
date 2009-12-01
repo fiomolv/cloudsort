@@ -136,11 +136,15 @@ public class HITManager {
 	long lifetimeInSeconds = 60 * 60 * 24; // one day
 	String requesterAnnotation = "ShopZilla two plus one HIT";
 	
+	String externalURL="http://"+hostname+"/cloudsort/hit.do?id="+ product.getId();
+	if(tier==2){
+	    externalURL+="&amp;tier=2";
+	}
+	
 	String question = "<?xml version=\"1.0\"?>"
 		+ "<ExternalQuestion xmlns=\"http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2006-07-14/ExternalQuestion.xsd\">"
-		+ "	<ExternalURL>http://"+hostname+"/cloudsort/hit.do?id="
-		+ product.getId() + "</ExternalURL>"
-		+ "	<FrameHeight>400</FrameHeight>" + "</ExternalQuestion>";
+		+ "	<ExternalURL>"+externalURL + "</ExternalURL>"
+		+ "	<FrameHeight>500</FrameHeight>" + "</ExternalQuestion>";
 
 	QualificationRequirement[] qualificationRequirements = null;
 
@@ -373,7 +377,7 @@ public class HITManager {
 	    service.approveAssignment(assignmentId,
 		    "Product classified correctly.  Thank you.");
 	} else {
-	    service.approveAssignment(assignmentId,
+	    service.rejectAssignment(assignmentId,
 		    "Product classified incorrectly.  Thank you.");
 	}
 

@@ -42,21 +42,23 @@ public class DAOTest extends TestCase
       Category category = turkDAO.getCategoryByName("Appliances");
       
       DirWatcher dirWatcher = new DirWatcher("/tmp","/tmp/out",category.getId(),turkDAO,new HITManager());
-
-      
 	
       dirWatcher.load(category.getId(), new File(filename),false);
 	  
 	  
       //Product product = new com.statera.cloudsort.entity.Product();
-     
-    
+       
       List<Category> topLevelCategories = turkDAO.getTopLevelCategories();
       
       assertNotNull(topLevelCategories);
       assertEquals(18,topLevelCategories.size());
       
       
+      List<Category> tierOneAnswers = turkDAO.getTierOneAnswersCategories(1);
+      assertNotNull(tierOneAnswers);
+      assertEquals(2,tierOneAnswers.size());
+      
+      /*
       Qualification qualification = new Qualification();
       
       Integer categoryId = 10023;
@@ -73,7 +75,7 @@ public class DAOTest extends TestCase
       
       assertNotNull(qualification2);
       assertEquals(new Integer(75),qualification2.getQualTypeScoreTrusted());
-   
+   */
       /*
       Config config = new Config();
       config.setName("host");
