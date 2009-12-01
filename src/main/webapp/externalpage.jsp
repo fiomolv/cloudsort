@@ -5,8 +5,14 @@
         @import "http://o.aolcdn.com/dojo/1.0/dijit/themes/tundra/tundra.css";
         @import "http://o.aolcdn.com/dojo/1.0/dojo/resources/dojo.css"
     </style>
-    <script type="text/javascript" src="http://o.aolcdn.com/dojo/1.0/dojo/dojo.xd.js"
+    <!--script type="text/javascript" src="http://o.aolcdn.com/dojo/1.0/dojo/dojo.xd.js"
+        djConfig="parseOnLoad: true"></script-->
+        
+       
+    <script type="text/javascript" src="http://o.aolcdn.com/dojo/1.3.0/dojo/dojo.xd.js"
         djConfig="parseOnLoad: true"></script>
+        
+        
     <script type="text/javascript">
        dojo.require("dojo.parser");
        dojo.require("dijit.form.FilteringSelect");
@@ -47,7 +53,7 @@ function decode(strToDecode)
 <h2>Select a category for the product shown below.</h2>
 <p>
 
-  <div id="categoryStore" dojoType="dojo.data.ItemFileReadStore" jsId="categoryStore" url="/cloudsort/category?type=<%=request.getParameter("type")%>">
+  <div id="categoryStore" dojoType="dojo.data.ItemFileReadStore" jsId="categoryStore" url="/cloudsort/category?type=1">
         </div>
         <input dojoType="dijit.form.FilteringSelect" value="" store="categoryStore"
         searchAttr="name" name="category" id="category">

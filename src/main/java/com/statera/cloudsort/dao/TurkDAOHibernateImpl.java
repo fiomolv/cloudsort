@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.statera.cloudsort.entity.Category;
@@ -194,8 +195,19 @@ public class TurkDAOHibernateImpl extends HibernateDaoSupport implements TurkDAO
     }
 
     public List<Product> getNewProducts() {
-	List<Product> list = getHibernateTemplate().find("from Product order by id desc limit 20");  
+	HibernateTemplate ht = getHibernateTemplate();
+	ht.setMaxResults(40);
+
+	List<Product> list = ht.find("from Product order by id desc");  
+	ht.setMaxResults(0);
+
 	return list;
+    }
+
+    public List<Category> getTierOneAnswersCategories(Integer productId) {
+	List<Category> list = getHibernateTemplate().find("from Category where categoryCode in (select answer from Response where requestId in (select id from Request where productId=?))", productId);  
+	return list;
+
     }
 
 }

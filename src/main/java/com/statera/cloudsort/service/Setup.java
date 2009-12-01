@@ -69,7 +69,7 @@ public class Setup {
 	    dao.saveConfig(new Config(Config.TURK_ENVIRONMENT,"SANDBOX"));
 	       	    
 	    dao.saveConfig(new Config(Config.TIER_1_REWARD,"0.01"));
-	    dao.saveConfig(new Config(Config.TIER_1_REWARD,"0.02"));      
+	    dao.saveConfig(new Config(Config.TIER_2_REWARD,"0.02"));      
 	}
 	
 	

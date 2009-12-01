@@ -2,16 +2,26 @@
 
 <html>
   <head>
-    <style type="text/css">
-        @import "http://o.aolcdn.com/dojo/1.0/dijit/themes/tundra/tundra.css";
-        @import "http://o.aolcdn.com/dojo/1.0/dojo/resources/dojo.css"
-    </style>
-    <script type="text/javascript" src="http://o.aolcdn.com/dojo/1.0/dojo/dojo.xd.js"
-        djConfig="parseOnLoad: true"></script>
-    <script type="text/javascript">
-       dojo.require("dojo.parser");
-       dojo.require("dijit.form.FilteringSelect");
+    
+  <script src="/cloudsort/js/jquery-1.3.2.min.js"></script>
+  <link rel="stylesheet" href="/cloudsort/js/jquery-autocomplete/demo/main.css" type="text/css" />
+  <link rel="stylesheet" href="/cloudsort/js/jquery-autocomplete/jquery.autocomplete.css" type="text/css" />
+  <script type="text/javascript" src="/cloudsort/js/jquery-autocomplete/lib/jquery.bgiframe.min.js"></script>
+  <script type="text/javascript" src="/cloudsort/js/jquery-autocomplete/lib/jquery.dimensions.js"></script>
+  <script type="text/javascript" src="/cloudsort/js/jquery-autocomplete/jquery.autocomplete.js"></script>
+   <script type="text/javascript">
+       $(document).ready(function(){
+    var data = [];
+      <c:forEach var="category" items="${categories}">
+            data.push("${category.name}");</c:forEach>   
+          $("#category2").autocomplete(data,{matchContains: true}); 
+});
+  
      </script>
+     
+     
+     
+     
      
 <script language="Javascript">
 //
@@ -42,7 +52,6 @@ function selectChanged(){
    document.getElementById('radio5').checked=false;
 }
 
-
 //
 // This method decodes the query parameters that were URL-encoded
 //
@@ -54,10 +63,7 @@ function decode(strToDecode)
 
 </script>
 </head>
-<body class="tundra">
-
-
-
+<body>
 
 <form id="mturk_form" 
 name="hitform'
@@ -71,7 +77,8 @@ action="http://www.mturk.com/mturk/externalSubmit">
 <table border="0">
 <tr><td colspan="2">
 <h2>Select a category for the product shown below.</h2>
-Product: <a href="${product.productUrl} target="_new">${product.title}</a>
+Product: <a href="${product.productUrl}" target="_new">${product.title}</a>
+
 
 
 </td></tr>
@@ -84,7 +91,37 @@ Product: <a href="${product.productUrl} target="_new">${product.title}</a>
 
 
 <p>
-If you see the correct category among these six suggestions, select it.<p/>
+
+<c:if test="${tierOneAnswers !=null}">
+<p>
+
+Two other workers have previously accepted this HIT but have selected different categories.  The answers these workers
+selected are shown below.
+If you can verify that one of these answers is correct, please select it.
+</p>
+  <c:forEach var="tierOneAnswer" items="${tierOneAnswers}">
+     <input type="radio" name="category0" value="${tierOneAnswer.categoryCode}"
+    onClick="radioClicked()"/>${tierOneAnswer.name}<br/>
+  </c:forEach>
+</p>
+
+</c:if>
+
+
+
+
+<c:if test="${tierOneAnswers !=null}">
+If you feel that neither of the answers from the original workers is correct, look for the correct category 
+among these six suggestions, select it.
+</c:if>
+
+<c:if test="${tierOneAnswers ==null}">
+If you see the correct category among these six suggestions, select it.
+</c:if>
+
+
+
+<p/>
 </p>
 
 <p>
@@ -98,24 +135,17 @@ If you see the correct category among these six suggestions, select it.<p/>
 </p>
 
 
-Otherwise, select from the comprehensive list below.
+Otherwise, start typing a category into the field below and let the auto-complete logic select the best match.
 <p/>
 <p>
         
-        <select dojoType="dijit.form.FilteringSelect"
-          name="category2" id="category"
-          autocomplete="true"
-          onChange="selectChanged()"          
-          value="0">
-          <option value="0"></option>
-     
-          <c:forEach var="category" items="${categories}">
-            <option value="${category.categoryCode}">${category.name}</option>
-          </c:forEach>        
-     
-        </select>        
+    <input id="category2" name="category2" />
 
 <p/>
+
+
+ 
+
 <p>
 <input id="submitButton" type="submit" name="Submit" value="Submit">
 <p/>

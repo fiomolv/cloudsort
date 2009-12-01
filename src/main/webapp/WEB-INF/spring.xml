@@ -5,13 +5,13 @@
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
                
-        <!--property name="url" value="jdbc:mysql://localhost/mturk" />
+        <property name="url" value="jdbc:mysql://localhost/cloudsort" />
         <property name="username" value="root" />
-        <property name="password" value="m7urk" /-->
-        
-        <property name="url" value="jdbc:mysql://cloudsort.cxtckzcqtplc.us-east-1.rds.amazonaws.com:3306/cloudsort" />
-        <property name="username" value="cloudsort" />
         <property name="password" value="m7urk" />
+        
+        <!--property name="url" value="jdbc:mysql://cloudsort.cxtckzcqtplc.us-east-1.rds.amazonaws.com:3306/cloudsort" />
+        <property name="username" value="cloudsort" />
+        <property name="password" value="m7urk" /-->
        
         
         <property name="initialSize" value="5" />

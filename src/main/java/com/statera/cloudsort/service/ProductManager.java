@@ -32,5 +32,12 @@ public class ProductManager {
     public List<Category> getDetailedCategories(){
 	return dao.getDetailedCategories();
     }
+
+
+
+
+    public Object getTierOneAnswersCategories(int productId) {
+	return dao.getTierOneAnswersCategories(productId);
+    }
     
 }
