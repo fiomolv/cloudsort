@@ -15,7 +15,7 @@ import com.statera.cloudsort.service.HITManager;
 
 public class HITResultServlet extends HttpServlet {
 
-    static Logger log = Logger.getLogger("LoopbackServlet");
+    static Logger log = Logger.getLogger("HITResultServlet");
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
 	    throws IOException {
@@ -26,9 +26,7 @@ public class HITResultServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws IOException {
-
-	
-	
+		
 	HITManager hitManager;
 
 	ApplicationContext ctx = WebApplicationContextUtils
@@ -37,24 +35,24 @@ public class HITResultServlet extends HttpServlet {
 
 	hitManager = (HITManager) ctx.getBean("HITManager");
 
-	log.info(" HIT RESULT servlet called with payload: "
+	log.info(" HIT RESULT servlet " +request.getMethod() + ": "
 		+ request.getQueryString()+ ", method = "+request.getMethod());
-
-	Enumeration names = request.getParameterNames();
-	while (names.hasMoreElements()) {
-	    String name = (String) names.nextElement();
-	    log.info("PARAM NAME:" + name + ", VALUE:"
-		    + request.getParameter(name));
-
+		
+	for(int i=1;i<100;i++){
+	    String eventType = request.getParameter("Event."+i+".EventType");	    
+	    if(eventType==null){
+		break;
+	    }else if("AssignmentSubmitted".equalsIgnoreCase(eventType)){
+		String hitId = request.getParameter("Event."+i+".HITId");
+		String hitTypeId = request.getParameter("Event."+i+".HITTypeId");
+		String assignmentId = request.getParameter("Event."+i+".AssignmentId");
+		
+		log.info(eventType + " for hitID " + hitId+ ", hitTypeId "+hitTypeId+ ", assignmentId "+assignmentId);
+		
+		hitManager.getHITResult(hitId);
+	    }
 	}
 
-	String hitId = request.getParameter("Event.1.HITId");
-
-	log.info("hitID = " + hitId);
-
-	hitManager.getHITResult(hitId);
-
-	// response.setContentType("text/xml");
-	response.getWriter().print("HIT RESULT servlet called with payload");
+	response.getWriter().print("HIT RESULT servlet OK");
     }
 }

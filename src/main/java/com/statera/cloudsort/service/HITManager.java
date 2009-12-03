@@ -1,7 +1,5 @@
 package com.statera.cloudsort.service;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -12,10 +10,12 @@ import com.amazonaws.mturk.requester.Assignment;
 import com.amazonaws.mturk.requester.Comparator;
 import com.amazonaws.mturk.requester.EventType;
 import com.amazonaws.mturk.requester.HIT;
+import com.amazonaws.mturk.requester.HITStatus;
 import com.amazonaws.mturk.requester.NotificationSpecification;
 import com.amazonaws.mturk.requester.NotificationTransport;
 import com.amazonaws.mturk.requester.QualificationRequirement;
 import com.amazonaws.mturk.service.axis.RequesterService;
+import com.amazonaws.mturk.service.exception.InternalServiceException;
 import com.amazonaws.mturk.util.ClientConfig;
 import com.statera.cloudsort.dao.TurkDAO;
 import com.statera.cloudsort.entity.Config;
@@ -26,11 +26,8 @@ import com.statera.cloudsort.entity.Response;
 
 public class HITManager {
 
-    //private RequesterService service;
+    private RequesterService service;
 
-    // private static String host = "ec2-67-202-32-214.compute-1.amazonaws.com";
-    //private static String host = "24.17.221.139";
-    
     
     static Logger log = Logger.getLogger("HitManager");
 
@@ -40,6 +37,7 @@ public class HITManager {
 
     public void setTurkDAO(TurkDAO turkDAO) {
 	this.turkDAO = turkDAO;
+	init();
     }
 
     private AnswerParser answerParser;
@@ -48,14 +46,12 @@ public class HITManager {
 	this.answerParser = answerParser;
     }
 
-    public HITManager() {
+    public HITManager(){
 	
-
     }
-    
 
-    RequesterService getRequesterService(){
-	
+    public void init(){
+		
 	hostname = turkDAO.getConfigValue(Config.HOST);
 	log.info("Config.HOST = " + hostname);
 	
@@ -87,10 +83,9 @@ public class HITManager {
 
 	clientConfig.setRetriableErrors(retriableErrors);
 
-	return new RequesterService(clientConfig);
+	service = new RequesterService(clientConfig);
     }
-    
-    
+        
 
     /**
      * Check to see if there are sufficient funds.
@@ -101,7 +96,7 @@ public class HITManager {
 	
 	
 	
-	double balance = getRequesterService().getAccountBalance();
+	double balance = service.getAccountBalance();
 	// System.out.println("Got account balance: "+
 	// RequesterService.formatCurrency(balance));
 	return balance > 0;
@@ -110,7 +105,7 @@ public class HITManager {
     public void createHIT(Product product, int tier) {
 
 
-	RequesterService service = getRequesterService();
+
 	
 	log.info("creating tier " + tier + " hit for productId "
 		+ product.getId());
@@ -227,7 +222,6 @@ public class HITManager {
 
     public void getHITResult(String hitId) {
 
-	RequesterService service = getRequesterService();
 	
 	log.info("getting assignment result for hitId " + hitId);
 
@@ -267,23 +261,22 @@ public class HITManager {
 		response.setRequestId(request.getId());
 	    }
 
+	    response.setAnswer(categoryIdAnswer);
+
 	    responses[i] = response;
 	    turkDAO.saveResponse(response);
-
 	    i++;
 	}
 
-	if (assignments.length == 2) {
+	if (assignments.length == 2 && responses[0].getAnswer()!=null && responses[1].getAnswer()!=null) {
 
-	    if (responses[0].getAnswer().equals(responses[1].getAnswer())) {
+	    if (!AnswerParser.EMPTY_ANSWER.equals(responses[0].getAnswer())&&responses[0].getAnswer().equals(responses[1].getAnswer())) {
 
 		String unanymousAnswer = responses[0].getAnswer();
 
-		String requesterFeedback = "Product classified correctly.  Thank you.";
-		service.approveAssignment(assignments[0].getAssignmentId(),
-			requesterFeedback);
-		service.approveAssignment(assignments[1].getAssignmentId(),
-			requesterFeedback);
+		reviewAssignment(assignments[0].getAssignmentId(),true);
+		reviewAssignment(assignments[1].getAssignmentId(),true);
+				
 		Product product = turkDAO
 			.getProductById(request.getProductId());
 		product.setCategoryCode(unanymousAnswer);
@@ -312,7 +305,7 @@ public class HITManager {
 		createHIT(product, 2);
 	    }
 
-	} else if (assignments.length == 1) {
+	} else if (assignments.length == 1 && responses[0].getAnswer()!=null ) {
 	    // check to see if its an adjudication result
 
 	    if (request != null && request.getTier() == 2) {
@@ -329,11 +322,17 @@ public class HITManager {
 			.getResponsesByRequestId(tierOneRequest.getId());
 
 		for (Response tierOneResponse : tierOneResponses) {
-		    if (tierOneResponse.getAnswer().equals(
+		    
+		    if(tierOneResponse.getAnswer()==null){
+			log.warn("tier2 response received but tier one answer is null for responseId "+ tierOneResponse.getId());
+		    }
+		    
+		    
+		    else if (!AnswerParser.EMPTY_ANSWER.equals(responses[0].getAnswer())&&tierOneResponse.getAnswer().equals(
 			    responses[0].getAnswer())) {
 
 			reviewAssignment(tierOneResponse.getAssignmentId(),
-				true,service);
+				true);
 			tierOneResponse.setResult("APPROVED");
 
 			log.info("approved assigment "
@@ -342,7 +341,7 @@ public class HITManager {
 
 		    } else {
 			reviewAssignment(tierOneResponse.getAssignmentId(),
-				false,service);
+				false);
 			tierOneResponse.setResult("REJECTED");
 			log.info("rejected assigment "
 				+ tierOneResponse.getAssignmentId()
@@ -353,13 +352,24 @@ public class HITManager {
 		}
 
 		// review tier2 response
-		reviewAssignment(assignments[0].getAssignmentId(), true,service);
+		
+		
+		if(!AnswerParser.EMPTY_ANSWER.equals(responses[0].getAnswer())){
+		
+		reviewAssignment(assignments[0].getAssignmentId(), true);
 		responses[0].setResult("APPROVED");
+		log.info("approved adjudication assigment "
+			+ assignments[0].getAssignmentId());
+		}else{
+			reviewAssignment(assignments[0].getAssignmentId(), false);
+			responses[0].setResult("REJECTED");	
+			log.info("rejected adjudication assigment "
+				+ assignments[0].getAssignmentId());
+		}
 		responses[0].setModifiedDate(new Date());
 		turkDAO.saveResponse(responses[0]);
 
-		log.info("approved adjudication assigment "
-			+ assignments[0].getAssignmentId());
+		
 
 		Product product = turkDAO
 			.getProductById(request.getProductId());
@@ -371,8 +381,9 @@ public class HITManager {
 	}
     }
 
-    private void reviewAssignment(String assignmentId, boolean correct,RequesterService service) {
+    private void reviewAssignment(String assignmentId, boolean correct) {
 
+	try{
 	if (correct) {
 	    service.approveAssignment(assignmentId,
 		    "Product classified correctly.  Thank you.");
@@ -380,7 +391,41 @@ public class HITManager {
 	    service.rejectAssignment(assignmentId,
 		    "Product classified incorrectly.  Thank you.");
 	}
+	}catch(InternalServiceException e){
+	    log.error("InternalServiceException while trying to approve["+correct+"] assignment "+assignmentId+", "+e.getMessage());	    	    
+	}catch(Exception e){
+	    log.error("Exception while trying to approve["+correct+"] assignment "+assignmentId+", "+e.getMessage());	    	    
+	}
 
     }
+
+    public void deleteHITs(String[] string) {
+		
+	service.deleteHITs(string, true,true,null);
+			
+    }
+
+    public void getHITStatus(String hitId) {
+		
+	HIT hit = service.getHIT(hitId);
+	
+	HITStatus hitStatus = hit.getHITStatus();
+	
+	String value = hitStatus.getValue();
+	
+	System.out.println("hit value  = "+ value);
+			
+	Assignment[] assignments = service.getAssignmentsForHIT(hitId, 1);
+	if(assignments!=null){
+	for(Assignment assignment:assignments){
+	    System.out.println("assignment:" + assignment.getAnswer());
+	    
+	}
+	}
+	
+    }
+    
+    
+    
 
 }

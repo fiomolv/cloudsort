@@ -127,8 +127,15 @@ public interface TurkDAO {
     
     public List<Product> getNewProducts();
     
-    public List<Category> getTierOneAnswersCategories(Integer producrId);
+    public List<String> getTierOneAnswersCategories(Integer producrId);
 
+    public List<Request> getAllRequests();
+
+    public List<Request> getOrphanedRequests();
+
+    public List<Response> getOrphanedResponses();
+
+    public List<Response> getResponsesWithNoResult();
     
 
 }

@@ -79,17 +79,22 @@ public class TurkDAOHibernateImpl extends HibernateDaoSupport implements TurkDAO
     }   
       
     public Request getRequestById(Integer id) {
+	long start = System.currentTimeMillis();
 	Request request = (Request) getHibernateTemplate().load(Request.class, id);
-	System.out.println("Got request: " + request);
+	long elapsed = System.currentTimeMillis() - start;
+	log.info("Got request by id in : " + elapsed);
 	return request;
     }
 
     public Request getRequestByHitId(String hitId) {
+	long start = System.currentTimeMillis();
 	Request request = null;
 	List<Request> list = getHibernateTemplate().find("from Request where hitId=?", hitId);  
 	if(list!=null&&list.size()>0){
 	    request = list.get(0);
 	}
+	long elapsed = System.currentTimeMillis() - start;
+	log.info("Got request by hitId in : " + elapsed);
 	return request;
     }
 
@@ -204,10 +209,28 @@ public class TurkDAOHibernateImpl extends HibernateDaoSupport implements TurkDAO
 	return list;
     }
 
-    public List<Category> getTierOneAnswersCategories(Integer productId) {
-	List<Category> list = getHibernateTemplate().find("from Category where categoryCode in (select answer from Response where requestId in (select id from Request where productId=?))", productId);  
+    public List<String> getTierOneAnswersCategories(Integer productId) {
+	//List<Category> list = getHibernateTemplate().find("from Category where categoryCode in (select answer from Response where requestId in (select id from Request where productId=?) and tier=1)", productId);  
+	List<String> list = getHibernateTemplate().find("select cat.name from Category cat , Response resp, Request req where resp.requestId = req.id and req.productId=? and req.tier=1 and cat.categoryCode= resp.answer)", productId);  
 	return list;
 
+    }
+
+    public List<Request> getAllRequests() {
+	
+	return getHibernateTemplate().find("from Request");  
+    }
+
+    public List<Request> getOrphanedRequests() {
+	return getHibernateTemplate().find("from Request where id not in(select requestId from Response)"); 
+    }
+
+    public List<Response> getOrphanedResponses() {
+	return getHibernateTemplate().find("from Response where answer is null"); 
+    }
+
+    public List<Response> getResponsesWithNoResult() {
+	return getHibernateTemplate().find("from Response where result is null"); 
     }
 
 }

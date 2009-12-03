@@ -1,23 +1,16 @@
-package com.statera.cloudsort;
+package com.statera.cloudsort.service;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.StringTokenizer;
-
-import au.com.bytecode.opencsv.CSVReader;
 
 import com.Ostermiller.util.CSVParser;
 import com.statera.cloudsort.dao.TurkDAO;
 import com.statera.cloudsort.entity.Product;
-import com.statera.cloudsort.entity.Suggestion;
-import com.statera.cloudsort.service.HITManager;
 
 public class DirWatcher extends Thread {
 
