@@ -90,6 +90,7 @@ public class Product implements Serializable {
         this.title = title;
     }
 
+    @Basic(fetch = FetchType.EAGER)
     public Integer getParentCategoryId() {
 	return parentCategoryId;
     }

@@ -137,5 +137,7 @@ public interface TurkDAO {
 
     public List<Response> getResponsesWithNoResult();
     
+    
+    public String getParentCategoryNameForProduct(Integer productId);
 
 }

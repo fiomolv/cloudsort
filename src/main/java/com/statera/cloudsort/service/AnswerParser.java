@@ -32,8 +32,6 @@ public class AnswerParser {
 
     static Logger log = Logger.getLogger("AnswerParser");
     XPathExpression expr1;
-    XPathExpression expr2;
-    XPathExpression expr3;
 
     public AnswerParser() {
 
@@ -44,10 +42,7 @@ public class AnswerParser {
 	try {
 	    expr1 = xpath
 		    .compile("QuestionFormAnswers/Answer[QuestionIdentifier='category']/FreeText/text()");
-	    expr2 = xpath
-		    .compile("QuestionFormAnswers/Answer[QuestionIdentifier='category2']/FreeText/text()");
-	    expr3 = xpath
-		    .compile("QuestionFormAnswers/Answer[QuestionIdentifier='category0']/FreeText/text()");
+	   
 	} catch (XPathExpressionException e) {
 	    log.error("failed to compile answer xpaths", e);
 	}
@@ -70,23 +65,26 @@ public class AnswerParser {
 
 	    doc = builder.parse(byteArrayInputStream);
 
-	    answer = getText(doc, expr1);
-	    String category2 = getText(doc, expr2);
-	    String category0 = getText(doc, expr3);
-
-	    // category 0 is tier 1 answer selected by tier2 worker
-	    if (category0 != null && category0.length() > 0
-		    && !category0.equals("0")) {
-		answer = category0;
-
-		// cateogry is autocomplete answer.. need to convert from name
-		// to code
-	    } else if (category2 != null && category2.length() > 0
-		    && !category2.equals("0")) {
-		Category cat = turkDAO.getCategoryByName(category2);
+	    String category = getText(doc, expr1);
+	    
+	    if(category!=null&&category.length()>2 && category.startsWith("|")){
+		category = category.substring(1);
+	    }
+	    
+	    if(category!=null&&category.length()>2 && category.endsWith("|")){
+		category = category.substring(0,category.lastIndexOf("|"));
+	    }	    
+	    try{
+		
+		Category cat = turkDAO.getCategoryByName(category);
 		if (cat != null) {
 		    answer = cat.getCategoryCode();
+		}else{
+		    log.info("unable to look up categoryCode for " + category);
 		}
+	    }catch(Exception e){
+		    log.info("unable to look up categoryCode for " + category);
+
 	    }
 
 	    if (xml != null && xml.length() > 0 && answer == null) {

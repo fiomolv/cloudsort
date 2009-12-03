@@ -39,7 +39,7 @@ public class Ingestor {
 	    	    
 	    new File(processedDir).mkdirs();
 	    
-	    DirWatcher dirWatcher = new DirWatcher(inDir,processedDir,category.getId(),dao,hitManager);
+	    DirWatcher dirWatcher = new DirWatcher(inDir,processedDir,category,dao,hitManager);
 	    
 	    dirWatcher.start();	    
 	}

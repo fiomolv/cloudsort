@@ -14,7 +14,7 @@
     var data = [];
       <c:forEach var="category" items="${categories}">
             data.push("${category.name}");</c:forEach>   
-          $("#category2").autocomplete(data,{matchContains: true}); 
+          $("#category8").autocomplete(data,{matchContains: true,mustMatch: true}); 
 });
   
      </script>
@@ -39,17 +39,37 @@ function gup( name )
     return results[1];
 }
 
+function checkForm(){
+   var categoryEntered = false;
+   for (var i=0;i<8;i++){
+      cbID = 'category'+i;
+      var element=document.getElementById(cbID);
+      if(element!=null && element.checked) categoryEntered = true;
+   }
+   
+   var element=document.getElementById('category8');
+   
+   if(element!=null && element.value!=null&& element.value!=''){
+      categoryEntered=true;
+   }
+    
+   if(!categoryEntered){
+      alert('Please specify a category before submitting.');
+   }
+   return categoryEntered;
+}
+
+
 function radioClicked(){
-   document.getElementById('category').value='';
+   document.getElementById('category8').value='';
 }
 
 function selectChanged(){
-   document.getElementById('radio0').checked=false;
-   document.getElementById('radio1').checked=false;
-   document.getElementById('radio2').checked=false;
-   document.getElementById('radio3').checked=false;
-   document.getElementById('radio4').checked=false;
-   document.getElementById('radio5').checked=false;
+   for (var i=0;i<8;i++){
+     cbID = 'category'+i;
+     var element=document.getElementById(cbID);
+     if(element!=null) element.checked=false;
+   }
 }
 
 //
@@ -68,9 +88,10 @@ function decode(strToDecode)
 <form id="mturk_form" 
 name="hitform'
 method="POST" 
+onSubmit="return checkForm()" 
+
 action="http://www.mturk.com/mturk/externalSubmit">
 <input type="hidden" id="assignmentId" name="assignmentId" value="">
-
 
 <center>
 
@@ -79,16 +100,10 @@ action="http://www.mturk.com/mturk/externalSubmit">
 <h2>Select a category for the product shown below.</h2>
 Product: <a href="${product.productUrl}" target="_new">${product.title}</a>
 
-
-
 </td></tr>
-
 <tr><td>
-
 <img id="pageFrame" src="${product.imageUrl}"/>
-
 </td><td>
-
 
 <p>
 
@@ -99,16 +114,14 @@ Two other workers have previously accepted this HIT but have selected different 
 selected are shown below.
 If you can verify that one of these answers is correct, please select it.
 </p>
+  <% int i=0;%>
   <c:forEach var="tierOneAnswer" items="${tierOneAnswers}">
-     <input type="radio" name="category0" value="${tierOneAnswer.categoryCode}"
-    onClick="radioClicked()"/>${tierOneAnswer.name}<br/>
+     <input id="category<%=i%>" type="radio" name="category" value="${tierOneAnswer}"
+    onClick="radioClicked()"/>${tierOneAnswer}<br/>
+    <% i++; %>
   </c:forEach>
 </p>
-
 </c:if>
-
-
-
 
 <c:if test="${tierOneAnswers !=null}">
 If you feel that neither of the answers from the original workers is correct, look for the correct category 
@@ -119,18 +132,15 @@ among these six suggestions, select it.
 If you see the correct category among these six suggestions, select it.
 </c:if>
 
-
-
 <p/>
 </p>
 
 <p>
-
-  <% int i=0;%>
+  <% int j=2;%>
   <c:forEach var="suggestion" items="${product.suggestions}">
-    <input id="radio<%=i%>" type="radio" name="category" value="${suggestion.categoryCode}"
+    <input id="category<%=j%>" type="radio" name="category" value="${suggestion.categoryName}"
     onClick="radioClicked()"/>${suggestion.categoryName}<br/>
-    <% i++; %>
+    <% j++; %>
   </c:forEach>
 </p>
 
@@ -138,19 +148,13 @@ If you see the correct category among these six suggestions, select it.
 Otherwise, start typing a category into the field below and let the auto-complete logic select the best match.
 <p/>
 <p>
-        
-    <input id="category2" name="category2" />
-
+  <input id="category8" name="category" onChange="selectChanged()"/>
 <p/>
-
-
- 
 
 <p>
 <input id="submitButton" type="submit" name="Submit" value="Submit">
 <p/>
 </td>
-
 
 </tr>
 <tr><td height="100%">
