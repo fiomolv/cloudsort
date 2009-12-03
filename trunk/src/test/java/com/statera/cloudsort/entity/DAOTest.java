@@ -8,9 +8,8 @@ import junit.framework.TestCase;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import com.statera.cloudsort.DirWatcher;
 import com.statera.cloudsort.dao.TurkDAO;
-import com.statera.cloudsort.service.CategoryLoader;
+import com.statera.cloudsort.service.DirWatcher;
 import com.statera.cloudsort.service.HITManager;
 import com.statera.cloudsort.service.Setup;
 
@@ -35,7 +34,7 @@ public class DAOTest extends TestCase
    */
   public void test()
   {
-      
+      /*
       String filename = "src/test/data/test.csv";
       //String filename = "src/test/data/appliances-11-18-09.csv";
       
@@ -57,7 +56,7 @@ public class DAOTest extends TestCase
       List<Category> tierOneAnswers = turkDAO.getTierOneAnswersCategories(1);
       assertNotNull(tierOneAnswers);
       assertEquals(2,tierOneAnswers.size());
-      
+      */
       /*
       Qualification qualification = new Qualification();
       
@@ -91,6 +90,10 @@ public class DAOTest extends TestCase
       */
       
       
+      List<String> cats = turkDAO.getTierOneAnswersCategories(5811);
+      for(String cat:cats){
+	  System.out.println(cat);
+      }
       
       
   }

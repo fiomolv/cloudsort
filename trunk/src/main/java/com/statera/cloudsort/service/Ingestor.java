@@ -1,4 +1,4 @@
-package com.statera.cloudsort;
+package com.statera.cloudsort.service;
 
 import java.io.File;
 import java.util.List;

@@ -5,16 +5,16 @@
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
                
-        <property name="url" value="jdbc:mysql://localhost/cloudsort" />
+        <!--property name="url" value="jdbc:mysql://localhost/cloudsort" />
         <property name="username" value="root" />
-        <property name="password" value="m7urk" />
-        
-        <!--property name="url" value="jdbc:mysql://cloudsort.cxtckzcqtplc.us-east-1.rds.amazonaws.com:3306/cloudsort" />
-        <property name="username" value="cloudsort" />
         <property name="password" value="m7urk" /-->
+        
+        <property name="url" value="jdbc:mysql://cloudsort.cxtckzcqtplc.us-east-1.rds.amazonaws.com:3306/cloudsort" />
+        <property name="username" value="cloudsort" />
+        <property name="password" value="m7urk" />
        
         
-        <property name="initialSize" value="5" />
+        <property name="initialSize" value="1" />
         <property name="maxActive" value="20" />
         <property name="maxIdle" value="5" />
         <property name="maxWait" value="20000" />  
@@ -59,7 +59,7 @@
   <bean id="HITManager" class="com.statera.cloudsort.service.HITManager" autowire="byName" />
   <bean id="productManager" class="com.statera.cloudsort.service.ProductManager" autowire="byName" />
   <bean id="categoryLoader" class="com.statera.cloudsort.service.CategoryLoader" autowire="byName" />
-  <bean id="ingestor" class="com.statera.cloudsort.Ingestor" autowire="byName" />
+  <bean id="ingestor" class="com.statera.cloudsort.service.Ingestor" autowire="byName" />
   <bean id="setup" class="com.statera.cloudsort.service.Setup" autowire="byName" />
   <bean id="answerParser" class="com.statera.cloudsort.service.AnswerParser" autowire="byName" />
   <bean id="qualificationManager" class="com.statera.cloudsort.service.QualificationManager" autowire="byName" />
