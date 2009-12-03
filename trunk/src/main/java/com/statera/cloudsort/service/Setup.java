@@ -61,11 +61,9 @@ public class Setup {
 	}else{
 	    log.info("setting up default config values");	
 
-	    dao.saveConfig(new Config(Config.HOST,"24.17.221.139"));
-	    //dao.saveConfig(new Config(Config.HOST,"ec2-67-202-32-214.compute-1.amazonaws.com"));
-	    
-	    dao.saveConfig(new Config(Config.ACCESS_KEY_ID,"AKIAIBIVBL3ZY2LNYHSQ"));
-	    dao.saveConfig(new Config(Config.SECRET_ACCESS_KEY,"kbU0tDzJdm0kN7HwV4cJ6jd/qUCLKNG/+gXIt3S2"));
+	    dao.saveConfig(new Config(Config.HOST,"yourhost.com"));
+	    dao.saveConfig(new Config(Config.ACCESS_KEY_ID,"AWSACCESSKEY"));
+	    dao.saveConfig(new Config(Config.SECRET_ACCESS_KEY,"AWSSECRETKEY"));
 	    dao.saveConfig(new Config(Config.TURK_ENVIRONMENT,"SANDBOX"));
 	       	    
 	    dao.saveConfig(new Config(Config.TIER_1_REWARD,"0.01"));

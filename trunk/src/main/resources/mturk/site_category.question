@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<ExternalQuestion xmlns="http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2006-07-14/ExternalQuestion.xsd">
-	<ExternalURL>http://24.17.221.139/cloudsort/externalpage.htm?url=${helper.urlencode($urls)}</ExternalURL>	
-	<FrameHeight>600</FrameHeight>
-</ExternalQuestion>
