@@ -22,15 +22,11 @@ public class AnswerParserTest extends TestCase {
 	String xml = "<QuestionFormAnswers xmlns=\"http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionFormAnswers.xsd\">"
 		+ "<Answer>"
 		+ "<QuestionIdentifier>category</QuestionIdentifier>"
-		+ "<FreeText>10521</FreeText>"
+		+ "<FreeText>Coffee Grinders</FreeText>"
 		+ "</Answer>"
 		+ "<Answer>"
 		+ "<QuestionIdentifier>Submit</QuestionIdentifier>"
 		+ "<FreeText>Submit</FreeText>"
-		+ "</Answer>"
-		+ "<Answer>"
-		+ "<QuestionIdentifier>category2</QuestionIdentifier>"
-		+ "<FreeText>0</FreeText>"
 		+ "</Answer>"
 		+ "</QuestionFormAnswers>";
 
@@ -39,51 +35,7 @@ public class AnswerParserTest extends TestCase {
 	assertNotNull(answer);
 	assertEquals(answer, "10521");
 
-	xml = "<QuestionFormAnswers xmlns=\"http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionFormAnswers.xsd\">"
-		+ "<Answer>"
-		+ "<QuestionIdentifier>category</QuestionIdentifier>"
-		+ "<FreeText>10521</FreeText>"
-		+ "</Answer>"
-		+ "<Answer>"
-		+ "<QuestionIdentifier>Submit</QuestionIdentifier>"
-		+ "<FreeText>Submit</FreeText>"
-		+ "</Answer>"
-		+ "<Answer>"
-		+ "<QuestionIdentifier>category2</QuestionIdentifier>"
-		+ "<FreeText>Tea Kettles</FreeText>"
-		+ "</Answer>"
-		+ "</QuestionFormAnswers>";
 
-	answer = answerParser.getAnswer(xml);
-
-	assertNotNull(answer);
-	assertEquals(answer, "10537");
-	
-	
-	xml = "<QuestionFormAnswers xmlns=\"http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionFormAnswers.xsd\">"
-		+ "<Answer>"
-		+ "<QuestionIdentifier>category</QuestionIdentifier>"
-		+ "<FreeText>10521</FreeText>"
-		+ "</Answer>"
-		+ "<Answer>"
-		+ "<QuestionIdentifier>Submit</QuestionIdentifier>"
-		+ "<QuestionIdentifier>category0</QuestionIdentifier>"
-		+ "<FreeText>999</FreeText>"
-		+ "</Answer>"
-		+ "<Answer>"
-		+ "<QuestionIdentifier>Submit</QuestionIdentifier>"
-		+ "<FreeText>Submit</FreeText>"
-		+ "</Answer>"
-		+ "<Answer>"
-		+ "<QuestionIdentifier>category2</QuestionIdentifier>"
-		+ "<FreeText>Tea Kettles</FreeText>"
-		+ "</Answer>"
-		+ "</QuestionFormAnswers>";
-
-	answer = answerParser.getAnswer(xml);
-
-	assertNotNull(answer);
-	assertEquals(answer, "999");	
 	
 	
     }

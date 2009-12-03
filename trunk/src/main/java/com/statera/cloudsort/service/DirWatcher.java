@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.Ostermiller.util.CSVParser;
 import com.statera.cloudsort.dao.TurkDAO;
+import com.statera.cloudsort.entity.Category;
 import com.statera.cloudsort.entity.Product;
 
 public class DirWatcher extends Thread {
@@ -18,15 +19,16 @@ public class DirWatcher extends Thread {
     private String processedDir;
     private TurkDAO dao;
     private HITManager hitManager;
-    private int parentCategoryId;
+    private Category category;
+
           
     
-    public DirWatcher(String inDir,String processedDir,int parentCategoryId,TurkDAO dao,HITManager hitManager){
+    public DirWatcher(String inDir,String processedDir,Category category, TurkDAO dao,HITManager hitManager){
 	this.inDir = inDir;
 	this.processedDir = processedDir;
-	this.parentCategoryId = parentCategoryId;
 	this.dao = dao;
 	this.hitManager = hitManager;
+	this.category=category;
     }
     
     public void run() {
@@ -41,7 +43,7 @@ public class DirWatcher extends Thread {
 		File src = new File(inDir+"/" +f); 
 
 		
-		load(parentCategoryId,src,true);
+		load(category,src,true);
 		
 		boolean success = src.renameTo(new File(processedDir, f));
 
@@ -93,7 +95,7 @@ public class DirWatcher extends Thread {
     
     
     
-    public void load(int parentCategoryId,File file,boolean createHITs){
+    public void load(Category category,File file,boolean createHITs){
 	 
 	try {
 	    CSVParser csvParser = new CSVParser(new FileInputStream(file));
@@ -119,7 +121,7 @@ public class DirWatcher extends Thread {
 		Product product = new Product();
 		
 		product.setOid(oid);
-		product.setParentCategoryId(parentCategoryId);
+		product.setParentCategoryId(category.getId());
 		product.setTitle(title);
 		product.setCreatedDate(new Date());
 		product.setImageUrl(imageUrl);

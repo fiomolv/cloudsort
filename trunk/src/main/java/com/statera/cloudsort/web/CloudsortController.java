@@ -83,8 +83,11 @@ public class CloudsortController {
 
 	    }
 
+	} catch (org.hibernate.ObjectNotFoundException e){
+		
+		log.info("ObjectNotFoundException: can't find request productId: " + id);
 	} catch (DataAccessException e) {
-	    log.info("can't find request productId: " + id);
+	    log.info("DataAccessException: can't find request productId: " + id);
 	}
 
 	return model;

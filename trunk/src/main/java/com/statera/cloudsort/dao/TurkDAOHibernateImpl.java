@@ -233,4 +233,14 @@ public class TurkDAOHibernateImpl extends HibernateDaoSupport implements TurkDAO
 	return getHibernateTemplate().find("from Response where result is null"); 
     }
 
+    public String getParentCategoryNameForProduct(Integer productId) {
+
+	String parentCategoryName=null;
+	List<String> list = getHibernateTemplate().find("select cat.name from Category cat , Product prod where prod.parentCategoryId = cat.id and prod.id=?" , productId);  
+	if(list!=null&&list.size()>0){
+	    parentCategoryName = list.get(0);
+	}
+	return parentCategoryName;
+    }
+
 }

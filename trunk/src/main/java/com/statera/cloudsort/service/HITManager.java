@@ -18,6 +18,7 @@ import com.amazonaws.mturk.service.axis.RequesterService;
 import com.amazonaws.mturk.service.exception.InternalServiceException;
 import com.amazonaws.mturk.util.ClientConfig;
 import com.statera.cloudsort.dao.TurkDAO;
+import com.statera.cloudsort.entity.Category;
 import com.statera.cloudsort.entity.Config;
 import com.statera.cloudsort.entity.Product;
 import com.statera.cloudsort.entity.Qualification;
@@ -104,13 +105,12 @@ public class HITManager {
 
     public void createHIT(Product product, int tier) {
 
-
-
 	
+	String parentCategoryName = turkDAO.getParentCategoryNameForProduct(product.getId());
 	log.info("creating tier " + tier + " hit for productId "
 		+ product.getId());
 	String hitTypeId = null;
-	String title = "Product categorization";
+	String title = "Choose the best category for this "+ parentCategoryName +" product";
 	String description = "Please look at this product and select a categorization for it.";
 	String keywords = "shopping,product,merchandise,shopzilla";
 		
@@ -234,6 +234,7 @@ public class HITManager {
 	if (assignments != null && assignments.length > 0) {
 	    request = turkDAO.getRequestByHitId(assignments[0].getHITId());
 	}
+	
 
 	int i = 0;
 	for (Assignment assignment : assignments) {
@@ -297,6 +298,7 @@ public class HITManager {
 
 		Product product = turkDAO
 			.getProductById(request.getProductId());
+
 
 		log
 			.info("answers did not match, creating adjudication hit for product "
@@ -388,8 +390,8 @@ public class HITManager {
 	    service.approveAssignment(assignmentId,
 		    "Product classified correctly.  Thank you.");
 	} else {
-	    service.rejectAssignment(assignmentId,
-		    "Product classified incorrectly.  Thank you.");
+	    service.approveAssignment(assignmentId,
+		    "Product classified.  Thank you.");
 	}
 	}catch(InternalServiceException e){
 	    log.error("InternalServiceException while trying to approve["+correct+"] assignment "+assignmentId+", "+e.getMessage());	    	    
