@@ -17,6 +17,13 @@
      <name>JBoss Repository</name>
      <url> http://repository.jboss.org/maven2/</url>
     </repository>
+
+    <repository>
+      <id>logicalis</id>
+      <url>http://seasun02.us.logicalis.com/maven</url>
+    </repository>
+
+    
    </repositories> 
 
 
@@ -164,6 +171,11 @@
       <version>1</version>
     </dependency> 
 
+    <dependency>
+      <groupId>com.oracle</groupId>
+      <artifactId>ojdbc</artifactId>
+      <version>10.2.0.3.0</version>
+    </dependency>
 
 
 <!-- mturk dependencies -->

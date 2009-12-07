@@ -3,17 +3,23 @@
 <beans>
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-               
+
+
         <property name="url" value="jdbc:mysql://localhost:3306/cloudsort" />
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />               
         <property name="username" value="root" />
         <property name="password" value="m7urk" />
         
         <!--property name="url" value="jdbc:mysql://cloudsort.cxtckzcqtplc.us-east-1.rds.amazonaws.com:3306/cloudsort" />
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />               
         <property name="username" value="cloudsort" />
         <property name="password" value="m7urk" /-->
-       
         
+        <!--property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" />
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver" />               
+        <property name="username" value="cloudsort" />
+        <property name="password" value="cloudsort" /-->
+               
         <property name="initialSize" value="1" />
         <property name="maxActive" value="20" />
         <property name="maxIdle" value="5" />
@@ -31,10 +37,11 @@
     <property name="dataSource" ref="dataSource" />
     <property name="hibernateProperties">
       <props>
-        <prop key="hibernate.hbm2ddl.auto">verify</prop>
+        <prop key="hibernate.hbm2ddl.auto">create</prop>
         <prop key="hibernate.show_sql">false</prop>
         <prop key="hibernate.connection.autocommit">true</prop>
         <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+        <!--prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop-->
       </props>
     </property>
     
@@ -56,7 +63,14 @@
   <bean id="hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor" autowire="byName" /><!--sessionFactory will get autowired-->
 
   <bean id="turkDaoTarget" class="com.statera.cloudsort.dao.TurkDAOHibernateImpl" autowire="byName" /><!--sessionFactory will get autowired-->
-  <bean id="HITManager" class="com.statera.cloudsort.service.HITManager" autowire="byName" />
+  <!-- bean id="HITManager" class="com.statera.cloudsort.service.HITManager">
+    <property name="turkDAO" ref="turkDAO" />
+    <property name="answerParser" ref="answerParser" />
+  </bean-->
+  
+  
+   
+ 
   <bean id="productManager" class="com.statera.cloudsort.service.ProductManager" autowire="byName" />
   <bean id="categoryLoader" class="com.statera.cloudsort.service.CategoryLoader" autowire="byName" />
   <bean id="ingestor" class="com.statera.cloudsort.service.Ingestor" autowire="byName" />

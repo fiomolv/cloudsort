@@ -1,7 +1,6 @@
 package com.statera.cloudsort.listener;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +10,8 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.statera.cloudsort.dao.TurkDAO;
+import com.statera.cloudsort.service.AnswerParser;
 import com.statera.cloudsort.service.HITManager;
 
 public class HITResultServlet extends HttpServlet {
@@ -26,14 +27,16 @@ public class HITResultServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws IOException {
-		
-	HITManager hitManager;
 
-	ApplicationContext ctx = WebApplicationContextUtils
+	ApplicationContext context = WebApplicationContextUtils
 		.getWebApplicationContext(this.getServletConfig()
 			.getServletContext());
 
-	hitManager = (HITManager) ctx.getBean("HITManager");
+	TurkDAO turkDAO = (TurkDAO)context.getBean("turkDAO");
+
+	AnswerParser answerParser = (AnswerParser)context.getBean("answerParser");
+		
+	HITManager hitManager = new HITManager(turkDAO,answerParser);
 
 	log.info(" HIT RESULT servlet " +request.getMethod() + ": "
 		+ request.getQueryString()+ ", method = "+request.getMethod());

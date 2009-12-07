@@ -10,7 +10,6 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 import com.statera.cloudsort.dao.TurkDAO;
 import com.statera.cloudsort.service.AnswerParser;
 import com.statera.cloudsort.service.HITManager;
-import com.statera.cloudsort.service.Setup;
 
 public class HITDeleter extends TestCase {
 
@@ -20,12 +19,11 @@ public class HITDeleter extends TestCase {
 	ApplicationContext context = new FileSystemXmlApplicationContext(
 		"src/main/webapp/WEB-INF/spring.xml");
 	TurkDAO turkDAO = (TurkDAO)context.getBean("turkDAO");
-	HITManager hitManager = new HITManager();
-	hitManager.setTurkDAO(turkDAO);
-	
-	
-	
-	
+
+	AnswerParser answerParser = (AnswerParser)context.getBean("answerParser");
+		
+	HITManager hitManager = new HITManager(turkDAO,answerParser);
+		
 	List<Request> requests = turkDAO.getAllRequests();
 	
 	String[] hits = new String[requests.size()];
@@ -35,11 +33,7 @@ public class HITDeleter extends TestCase {
 	    i++;
 	}
 	hitManager.deleteHITs(hits);
-	
-	
-	
-	
-
+		
     }
 
 }
