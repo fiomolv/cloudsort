@@ -54,7 +54,7 @@ public class DirWatcher extends Thread {
 	    
 	    try {
 		
-		Thread.currentThread().sleep(5000L);
+		Thread.sleep(5000L);
 				
 	    } catch (InterruptedException e) {
 		// TODO Auto-generated catch block
@@ -127,32 +127,25 @@ public class DirWatcher extends Thread {
 		product.setImageUrl(imageUrl);
 		product.setProductUrl(productUrl);
 				
-		for(int i=0;i<6;i++){
-		    
-		    
-		    
+		//for(int i=0;i<6;i++){
+		for(int i=0;i<(nextLine.length-4)/2;i++){
+		    		    		    
 		    String categoryCode = nextLine[4+2*i];
-		    
-		    
+		    		    
 		    if(categoryCode.length()>255)categoryCode=categoryCode.substring(0,255);
 		    
 		    String categoryName = nextLine[5+2*i];
 		    
 		    if(categoryName.length()>255)categoryName=categoryName.substring(0,255);
-		    
-		    
-		    
+		    		    		    
 		    product.addSuggestion(categoryCode,categoryName);
 		}
 		
-		dao.saveProduct(product);
+		dao.saveProduct(product);				
 				
-		
-		
 		if(createHITs)
 		  hitManager.createHIT(product, 1);
-		
-		
+				
 	    }
 	} catch (IOException e) {
 	    // TODO Auto-generated catch block

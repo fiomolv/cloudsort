@@ -1,15 +1,11 @@
 package com.statera.cloudsort.service;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.statera.cloudsort.dao.TurkDAO;
 import com.statera.cloudsort.entity.Config;
-import com.statera.cloudsort.entity.Qualification;
 
 public class ConfigManager {
 

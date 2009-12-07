@@ -1,13 +1,11 @@
 package com.statera.cloudsort.service;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.statera.cloudsort.dao.TurkDAO;
 import com.statera.cloudsort.entity.Product;
-import com.statera.cloudsort.entity.Qualification;
 
 public class StatusManager {
 

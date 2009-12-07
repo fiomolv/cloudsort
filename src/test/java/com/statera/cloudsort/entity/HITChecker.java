@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.statera.cloudsort.dao.TurkDAO;
+import com.statera.cloudsort.service.AnswerParser;
 import com.statera.cloudsort.service.HITManager;
 
 public class HITChecker extends TestCase {
@@ -18,7 +19,11 @@ public class HITChecker extends TestCase {
 	ApplicationContext context = new FileSystemXmlApplicationContext(
 		"src/main/webapp/WEB-INF/spring.xml");
 	TurkDAO turkDAO = (TurkDAO)context.getBean("turkDAO");
-	HITManager hitManager = (HITManager)context.getBean("HITManager");
+	AnswerParser answerParser = (AnswerParser)context.getBean("answerParser");
+	
+	
+	
+	HITManager hitManager = new HITManager(turkDAO,answerParser);
 	
 	
 	//String hitId = "CZJZXXZHGX64N8Y6GXCZ";

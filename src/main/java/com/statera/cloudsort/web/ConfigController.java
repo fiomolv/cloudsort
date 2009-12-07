@@ -1,13 +1,11 @@
 package com.statera.cloudsort.web;
 
 import java.util.Collection;
-import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +15,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.statera.cloudsort.entity.Config;
-import com.statera.cloudsort.entity.Qualification;
 import com.statera.cloudsort.service.ConfigManager;
-import com.statera.cloudsort.service.QualificationManager;
 import com.statera.cloudsort.validation.ConfigValidator;
-import com.statera.cloudsort.validation.QualificationValidator;
 
 /**
  * Controller to manage qualifications
@@ -67,6 +62,8 @@ public class ConfigController {
     @RequestMapping(method = RequestMethod.POST)
     public String processSubmit(@ModelAttribute("config") Config config,
 	    BindingResult result, SessionStatus status) {
+	
+	logger.info("updating config");
 	new ConfigValidator().validate(config, result);
 	if (result.hasErrors()) {
 	    return "configForm";

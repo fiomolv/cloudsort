@@ -3,7 +3,6 @@ package com.statera.cloudsort.service;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
@@ -41,6 +40,12 @@ public class CategoryLoader {
 			String code = st.nextToken();
 			String parentName = st.nextToken();
 
+			
+			Category existing = dao.getCategoryByCategoryCode(code);
+			if(existing==null){
+			
+			
+			
 			Category category = new Category();
 			category.setCategoryCode(code);
 			category.setName(name);
@@ -65,7 +70,8 @@ public class CategoryLoader {
 			}catch(Exception e){
 			    log.info("failed to load category " +  name+ ", " + e.getMessage());
 			}
-			
+
+			}
 		    }
 		} catch (IOException e) {
 		    // TODO Auto-generated catch block

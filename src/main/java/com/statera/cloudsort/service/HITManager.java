@@ -50,6 +50,11 @@ public class HITManager {
     public HITManager(){
 	
     }
+    
+    public HITManager(TurkDAO turkDAO, AnswerParser answerParser){
+	this.turkDAO = turkDAO;
+	this.answerParser = answerParser;
+    }
 
     public void init(){
 		
@@ -109,6 +114,7 @@ public class HITManager {
 	String parentCategoryName = turkDAO.getParentCategoryNameForProduct(product.getId());
 	log.info("creating tier " + tier + " hit for productId "
 		+ product.getId());
+	
 	String hitTypeId = null;
 	String title = "Choose the best category for this "+ parentCategoryName +" product";
 	String description = "Please look at this product and select a categorization for it.";
