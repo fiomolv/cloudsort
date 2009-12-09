@@ -62,7 +62,9 @@
 
   <bean id="hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor" autowire="byName" /><!--sessionFactory will get autowired-->
 
+
   <bean id="turkDaoTarget" class="com.statera.cloudsort.dao.TurkDAOHibernateImpl" autowire="byName" /><!--sessionFactory will get autowired-->
+
   <!-- bean id="HITManager" class="com.statera.cloudsort.service.HITManager">
     <property name="turkDAO" ref="turkDAO" />
     <property name="answerParser" ref="answerParser" />

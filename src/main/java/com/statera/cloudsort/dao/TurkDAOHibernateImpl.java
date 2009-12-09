@@ -115,10 +115,10 @@ public class TurkDAOHibernateImpl extends HibernateDaoSupport implements TurkDAO
 	return response;
     }
 
-    public List<Response> getTierOneResponsesForTierTwoResponseId(Integer id) {
-	List<Response> list = getHibernateTemplate().find("from Response where hitId in (select hitId from Request where tier=1 and selectCategory where parentID in (select id from Category where name=?) order by name",id);  
-	return list;
-    }
+    //public List<Response> getTierOneResponsesForTierTwoResponseId(Integer id) {
+    //	List<Response> list = getHibernateTemplate().find("from Response where hitId in (select hitId from Request where tier=1 and selectCategory where parentID in (select id from Category where name=?) order by name",id);  
+    //return list;
+    //}
 
     public Request getRequestByProductIdAndTier(int productId, int tier) {
 	Request request = null;

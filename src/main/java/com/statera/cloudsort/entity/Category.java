@@ -25,7 +25,6 @@ public class Category implements Serializable
   
   
   
-
   public  Integer getParentID() {
     return parentID;
 }

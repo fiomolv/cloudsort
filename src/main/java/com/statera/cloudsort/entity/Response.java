@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,6 +34,7 @@ public void setRequestId(Integer requestId) {
     this.requestId = requestId;
 }
 
+@Column(unique=true)
 public String getAssignmentId() {
     return assignmentId;
 }

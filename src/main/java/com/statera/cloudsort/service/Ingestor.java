@@ -15,8 +15,8 @@ public class Ingestor {
     
     public static final String inRoot = "/opt/cloudsort/in";
     public static final String processedRoot = "/opt/cloudsort/processed";
-    private TurkDAO dao = null;
-    private HITManager hitManager = null;    
+    private TurkDAO dao = null; 
+    private AnswerParser answerParser = null;
     
     @Autowired
     public void setTurkDAO(TurkDAO turkDAO){
@@ -24,9 +24,10 @@ public class Ingestor {
     }
     
     @Autowired
-    public void setHITManager(HITManager hitManager){
-	this.hitManager = hitManager;
-    }    
+    public void setAnswerParser(AnswerParser answerParser){
+	this.answerParser = answerParser;
+    }   
+   
     public void init(){
 	
 	List<Category> categories = dao.getTopLevelCategories();
@@ -39,6 +40,9 @@ public class Ingestor {
 	    	    
 	    new File(processedDir).mkdirs();
 	    
+	    HITManager hitManager = new HITManager();
+	    hitManager.setAnswerParser(answerParser);
+	    hitManager.setTurkDAO(dao);
 	    DirWatcher dirWatcher = new DirWatcher(inDir,processedDir,category,dao,hitManager);
 	    
 	    dirWatcher.start();	    

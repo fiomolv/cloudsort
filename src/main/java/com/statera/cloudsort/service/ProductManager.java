@@ -2,6 +2,7 @@ package com.statera.cloudsort.service;
 
 import java.util.List;
 
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.statera.cloudsort.dao.TurkDAO;
@@ -25,7 +26,9 @@ public class ProductManager {
     public Product getProduct(Integer productId){
 	
 	Product product = null;
+	try{
 	product = dao.getProductById(productId);
+	}catch(ObjectNotFoundException e){}
 	return product;
     }
 
