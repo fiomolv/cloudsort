@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -27,8 +30,6 @@ import org.hibernate.annotations.Proxy;
 @Proxy(lazy=false)
 public class Product implements Serializable {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)    
     private Integer id;
     private String oid;
     private String productUrl;
@@ -39,12 +40,9 @@ public class Product implements Serializable {
     private Date createdDate;
     private Date modifiedDate;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "ProductSuggestions",
-            joinColumns = {@JoinColumn(name = "productId")},
-            inverseJoinColumns = {@JoinColumn(name = "suggestionId")})
     private List<Suggestion> suggestions = new ArrayList<Suggestion>();
-         
+ 
+    @Column(unique=true)    
     public String getOid() {
         return oid;
     }
@@ -53,6 +51,8 @@ public class Product implements Serializable {
         this.oid = oid;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)   
     public Integer getId() {
 	return id;
     }
@@ -121,7 +121,10 @@ public class Product implements Serializable {
     
     
     
-       
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "ProductSuggestions",
+            joinColumns = {@JoinColumn(name = "productId")},
+            inverseJoinColumns = {@JoinColumn(name = "suggestionId")})
     public List<Suggestion> getSuggestions() {
         return suggestions;
     }
