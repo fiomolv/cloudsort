@@ -30,12 +30,6 @@ public class AnswerParserTest extends TestCase {
     }    
     
     
-    
-    
-    
-    
-    
-     
     public void test() {
 	String xml = "<QuestionFormAnswers xmlns=\"http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionFormAnswers.xsd\">"
 		+ "<Answer>"

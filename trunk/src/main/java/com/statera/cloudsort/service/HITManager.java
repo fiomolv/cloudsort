@@ -311,7 +311,8 @@ public class HITManager {
 		turkDAO.saveProduct(product);
 
 		for (int j = 0; j < 2; j++) {
-		    responses[j].setResult("APPROVED");
+		    responses[j].setResult(Response.RESULT_APPROVED);		    
+		    
 		    turkDAO.saveResponse(responses[j]);
 
 		    log.info("approved assignmentId "
@@ -363,7 +364,7 @@ public class HITManager {
 
 			reviewAssignment(tierOneResponse.getAssignmentId(),
 				true);
-			tierOneResponse.setResult("APPROVED");
+			tierOneResponse.setResult(Response.RESULT_APPROVED);
 
 			log.info("approved assigment "
 				+ tierOneResponse.getAssignmentId()
@@ -372,7 +373,10 @@ public class HITManager {
 		    } else {
 			reviewAssignment(tierOneResponse.getAssignmentId(),
 				false);
-			tierOneResponse.setResult("REJECTED");
+			tierOneResponse.setResult(Response.RESULT_REJECTED);
+			
+			
+			
 			log.info("rejected assigment "
 				+ tierOneResponse.getAssignmentId()
 				+ ", did not match adjudication result");
@@ -386,12 +390,12 @@ public class HITManager {
 		if (!AnswerParser.EMPTY_ANSWER.equals(responses[0].getAnswer())) {
 
 		    reviewAssignment(assignments[0].getAssignmentId(), true);
-		    responses[0].setResult("APPROVED");
+		    responses[0].setResult(Response.RESULT_APPROVED);
 		    log.info("approved adjudication assigment "
 			    + assignments[0].getAssignmentId());
 		} else {
 		    reviewAssignment(assignments[0].getAssignmentId(), false);
-		    responses[0].setResult("REJECTED");
+		    responses[0].setResult(Response.RESULT_REJECTED);
 		    log.info("rejected adjudication assigment "
 			    + assignments[0].getAssignmentId());
 		}

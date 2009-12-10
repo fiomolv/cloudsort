@@ -42,6 +42,7 @@ public class ConfigController {
     @RequestMapping("/config/list")
     public ModelAndView list() {
 
+	logger.info("listing config entries");
 	Collection configs = manager.getConfigs();
 
 	ModelAndView mav = new ModelAndView("configs");
