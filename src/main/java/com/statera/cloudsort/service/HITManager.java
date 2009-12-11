@@ -47,6 +47,9 @@ public class HITManager {
 
     }
 
+    double tierOneReward = 0.0;
+    double tierTwoReward = 0.0;
+    
     public HITManager(TurkDAO turkDAO, AnswerParser answerParser) {
 	this.turkDAO = turkDAO;
 	this.answerParser = answerParser;
@@ -88,6 +91,10 @@ public class HITManager {
 	clientConfig.setRetriableErrors(retriableErrors);
 
 	service = new RequesterService(clientConfig);
+	
+	
+	tierOneReward = Double.parseDouble(turkDAO.getConfigValue(Config.TIER_1_REWARD));
+	tierTwoReward = Double.parseDouble(turkDAO.getConfigValue(Config.TIER_2_REWARD));
     }
 
     /**
@@ -120,11 +127,9 @@ public class HITManager {
 
 	try {
 	    if (tier == 1) {
-		reward = Double.parseDouble(turkDAO
-			.getConfigValue(Config.TIER_1_REWARD));
+		reward = tierOneReward;
 	    } else {
-		reward = Double.parseDouble(turkDAO
-			.getConfigValue(Config.TIER_2_REWARD));
+		reward = tierTwoReward;
 	    }
 
 	} catch (Exception ignore) {
@@ -198,13 +203,15 @@ public class HITManager {
 	String responseGroup[] = null;
 	String hitTypeId = null;
 
+	long startTime = System.currentTimeMillis();
 	HIT hit = service.createHIT(hitTypeId, title, description, keywords,
 		question, reward, assignmentDurationInSeconds,
 		autoApprovalDelayInSeconds, lifetimeInSeconds, maxAssignments,
 		requesterAnnotation, qualificationRequirements, responseGroup);
 
+	long elapsed = System.currentTimeMillis() - startTime;
 	log.info("hit id " + hit.getHITId() + ", hitType " + hit.getHITTypeId()
-		+ " created");
+		+ " created in "+ elapsed +" ms");
 
 	Request request = new Request();
 	request.setProductId(product.getId());
@@ -212,9 +219,11 @@ public class HITManager {
 	request.setHitId(hit.getHITId());
 	request.setParentCategoryId(product.getParentCategoryId());
 	request.setTier(tier);
-
+	startTime = System.currentTimeMillis();
 	turkDAO.saveRequest(request);
-
+	elapsed = System.currentTimeMillis() - startTime;
+	log.info("request saved in " +  elapsed +" ms");
+	
 	if (hitTypes.contains(hit.getHITTypeId())) {
 	    log.info("notification already set up for hitTypeId " + hit.getHITTypeId());
 	} else {
@@ -242,6 +251,7 @@ public class HITManager {
 
     public void getHITResult(String hitId) {
 
+	long startTime = System.currentTimeMillis();
 	log.info("getting assignment result for hitId " + hitId);
 
 	Assignment[] assignments = service
@@ -410,6 +420,9 @@ public class HITManager {
 
 	    }
 	}
+	
+	long elapsed = System.currentTimeMillis() - startTime;
+	log.info("hitResult processed in " + elapsed +" ms");
     }
 
     private void reviewAssignment(String assignmentId, boolean correct) {
