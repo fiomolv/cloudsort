@@ -98,7 +98,13 @@ public class DirWatcher extends Thread {
 	    while ((nextLine = csvParser.getLine()) != null) {
 		// nextLine[] is an array of values from the line
 
-		String oid = nextLine[0];
+		
+		String oid = null;
+		
+		
+		try{
+		
+		oid = nextLine[0];
 		String title = nextLine[1];
 		String imageUrl = nextLine[2];
 		String productUrl = nextLine[3];
@@ -136,13 +142,30 @@ public class DirWatcher extends Thread {
 		}
 
 		try {
+		    long startTime = System.currentTimeMillis();
+
 		    dao.saveProduct(product);
+		    long elapsed = System.currentTimeMillis()-startTime;
+		    log.info("product OID " + oid + " saved in "+ elapsed+ " ms");
 
 		    if (createHITs)
 			hitManager.createHIT(product, 1);
 		} catch (DataAccessException e) {
 		    log.error("problem with product entry OID " + product.getOid()+ ": " + e.getMessage());
 		}
+		
+		}catch(Throwable t){
+		    log.error("Error processing new hit for OID "+ oid+", category "+ category.getName(),t);
+		    log.error("will pause for 5 seconds...");
+		    try {
+			Thread.sleep(5000L);
+		    } catch (InterruptedException e) {
+			e.printStackTrace();
+		    }
+
+		}
+		
+		
 	    }
 	} catch (IOException e) {
 	    // TODO Auto-generated catch block
